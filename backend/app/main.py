@@ -1,7 +1,7 @@
 # backend/app/main.py
-from fastapi import FastAPI, Depends, HTTPException
+from app.database import get_session
+from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session, text
-from database import get_session
 
 app = FastAPI()
 
@@ -23,5 +23,5 @@ def health_check(session: Session = Depends(get_session)):
     except Exception as e:
         raise HTTPException(
             status_code=500, 
-            detail=f"Database connection failed: {str(e)}"
-        )
+            detail=f"Database connection failed: {e!s}"
+)
