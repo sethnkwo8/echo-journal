@@ -56,12 +56,20 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
-    connectable = engine
-
-    with connectable.connect() as connection:
+    print(f"--> Connecting to engine: {engine.url}")
+    
+    with engine.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, 
+            target_metadata=target_metadata
         )
 
         with context.begin_transaction():
+            print("--> Running migrations...")
             context.run_migrations()
+            print("--> Migrations finished!")
+            
+if context.is_offline_mode():
+    run_migrations_offline()
+else:
+    run_migrations_online()
