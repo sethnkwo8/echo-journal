@@ -2,10 +2,11 @@
 
 # Base class for all auth errors
 class AuthError(Exception):
-    def __init__(self, message: str, status_code: int, code: str):
+    def __init__(self, message: str, status_code: int, code: str, headers: dict | None = None):
         self.message = message
         self.status_code = status_code
         self.code = code
+        self.headers = headers or {}
         super().__init__(self.message)
 
 class UserAlreadyExistsError(AuthError):
@@ -29,7 +30,8 @@ class UnauthorizedError(AuthError):
         super().__init__(
             message="Could not validate credentials",
             status_code=401,
-            code="UNAUTHORIZED"
+            code="UNAUTHORIZED",
+            headers={"WWW-Authenticate": "Bearer"}
         )
 
 class ExpiredResetLinkError(AuthError):
