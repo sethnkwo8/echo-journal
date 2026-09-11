@@ -18,6 +18,10 @@ def get_current_user(
 ) -> User :
     try:
         payload = jwt.decode(token, secret_key, algorithms=[ALGORITHM])
+
+        if payload.type != "access":
+            raise UnauthorizedError()
+            
         user_id_str: str | None = payload.get("sub")
         if user_id_str is None:
             raise UnauthorizedError()
