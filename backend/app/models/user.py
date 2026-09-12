@@ -15,6 +15,7 @@ class User(SQLModel, table=True):
 
     id: UUID = Field(default_factory=uuid4, primary_key=True, index=True)
     name: str = Field(index=True)
+    username: str = Field(index=True, min_length=3, unique=True)
     email: str = Field(unique=True, index=True)
     password_hash: str
     journal_entries: List["JournalEntry"] = Relationship(back_populates="user")

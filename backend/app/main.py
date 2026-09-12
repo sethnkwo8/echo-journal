@@ -1,10 +1,26 @@
 # backend/app/main.py
 from app.database import get_session
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi.responses import JSONResponse
+from app.auth.exceptions import AuthError
+from fastapi import Depends, FastAPI, HTTPException, Request
 from sqlmodel import Session, text
+from app.auth.router import router as auth_router
 
 app = FastAPI()
 
+# Include routes
+app.include_router(auth_router, tags=["Auth"])
+
+@app.exception_handler(AuthError)
+def auth_error_handler(request: Request, exc: AuthError):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "status": "error",
+            "code": exc.code,
+            "message": exc.message
+        }
+    )
 
 @app.get("/")
 def read_root():
