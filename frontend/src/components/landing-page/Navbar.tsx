@@ -1,4 +1,4 @@
-// frontend/src/components/landing_page/Navbar.tsx
+// frontend/src/components/landing-page/Navbar.tsx
 
 export function Navbar() {
     return (

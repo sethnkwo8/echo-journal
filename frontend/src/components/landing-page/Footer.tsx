@@ -1,4 +1,4 @@
-// frontend/src/components/landing_page/Footer.tsx
+// frontend/src/components/landing-page/Footer.tsx
 
 export function Footer() {
     return (
