@@ -1,0 +1,1 @@
+// frontend/src/components/auth/register/RegistrationForm.tsx
