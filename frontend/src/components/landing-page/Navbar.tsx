@@ -1,5 +1,6 @@
 // frontend/src/components/landing-page/Navbar.tsx
 import { NAV_LINKS } from "@/lib/landing-page/navLinks"
+import Link from "next/link"
 
 export function Navbar() {
     return (
@@ -22,16 +23,16 @@ export function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <button
+          <Link href="/login"
             className="text-sm font-medium transition-colors hover:text-white px-4 py-2"
             style={{ color: "#94A3B8" }}>
             Sign in
-          </button>
-          <button
+          </Link>
+          <Link href="/register"
             className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
             style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 4px 14px rgba(99,102,241,0.35)" }}>
             Get started free
-          </button>
+          </Link>
         </div>
       </nav>
     )
