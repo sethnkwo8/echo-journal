@@ -1,4 +1,5 @@
 // frontend/src/components/landing-page/Navbar.tsx
+import { NAV_LINKS } from "@/lib/landing-page/navLinks"
 
 export function Navbar() {
     return (
@@ -15,9 +16,9 @@ export function Navbar() {
           <span className="text-white font-bold text-xl" style={{ fontFamily: "Outfit, sans-serif" }}>Echo</span>
         </div>
         <div className="hidden md:flex items-center gap-8">
-          {["Features", "How it works", "Pricing"].map((item) => (
-            <a key={item} href="#" className="text-sm font-medium transition-colors hover:text-white"
-              style={{ color: "#94A3B8" }}>{item}</a>
+          {NAV_LINKS.map(({label, id}) => (
+            <a key={id} href="#how-it-works" className="text-sm font-medium transition-colors hover:text-white"
+              style={{ color: "#94A3B8" }}>{label}</a>
           ))}
         </div>
         <div className="flex items-center gap-3">

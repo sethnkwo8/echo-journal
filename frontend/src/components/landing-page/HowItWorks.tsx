@@ -3,7 +3,7 @@ import { STEPS } from "@/lib/landing-page/howItWorksSteps"
 
 export function HowItWorks() {
     return (
-        <section className="px-6 py-24" style={{ background: "#0D1220", borderTop: "1px solid #1E2638", borderBottom: "1px solid #1E2638" }}>
+        <section id="how-it-works" className="px-6 py-24" style={{ background: "#0D1220", borderTop: "1px solid #1E2638", borderBottom: "1px solid #1E2638" }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#6366F1" }}>How it works</p>
