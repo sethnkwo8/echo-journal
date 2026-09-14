@@ -1,4 +1,4 @@
-// frontend/src/lib/landing-page/feature.tsx
+// frontend/src/lib/landing-page/features.tsx
 
 export const features = [
     {
