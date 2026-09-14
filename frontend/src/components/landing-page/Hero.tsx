@@ -2,6 +2,7 @@
 "use client"
 
 import { useState } from "react";
+import Link from "next/link";
 
 export function Hero() {
     const scrollingPhrases = [
@@ -51,17 +52,17 @@ export function Hero() {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-16 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-          <button
+          <Link href="/register"
             className="group relative px-8 py-4 rounded-2xl text-base font-bold text-white transition-all hover:scale-105 active:scale-100"
             style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 8px 32px rgba(99,102,241,0.45)" }}>
             Start journaling free
             <span className="ml-2">→</span>
-          </button>
-          <button
+          </Link>
+          <Link href="/login"
             className="px-8 py-4 rounded-2xl text-base font-semibold transition-all hover:bg-surface"
             style={{ color: "#94A3B8", border: "1px solid #2A354D" }}>
             Sign in to Echo
-          </button>
+          </Link>
         </div>
 
         {/* Live Demo Card
