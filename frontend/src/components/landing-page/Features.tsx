@@ -1,5 +1,5 @@
 // frontend/src/components/landing-page/Features.tsx
-import { features } from "@/lib/landing-page/features"
+import { FEATURES } from "@/lib/landing-page/features"
 
 export function Features() {
   return (
@@ -13,7 +13,7 @@ export function Features() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {features.map((f, i) => (
+          {FEATURES.map((f, i) => (
             <div
               key={f.title}
               className="rounded-2xl p-7 group transition-all duration-300 hover:scale-[1.01]"
