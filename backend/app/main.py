@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from app.auth.exceptions import AuthError
 from app.journal_entry.exceptions import JournalError
 from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, text
 from app.auth.router import router as auth_router
 from app.journal_entry.router import router as journal_entry_router
@@ -13,6 +14,19 @@ app = FastAPI()
 # Include routes
 app.include_router(auth_router, tags=["Auth"])
 app.include_router(journal_entry_router, tags=["Journal Entry"])
+
+# Define the origins that are allowed to make requests to your backend
+origins = [
+    "http://localhost:3000",  # Next.js local development URL
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 
 # Auth global exception handler
 @app.exception_handler(AuthError)
