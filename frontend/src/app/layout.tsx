@@ -1,6 +1,7 @@
 // app/layout.tsx
 import { Inter, Outfit } from "next/font/google";
 import { Metadata } from "next";
+import Providers from "@/components/providers/query-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -63,7 +64,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
