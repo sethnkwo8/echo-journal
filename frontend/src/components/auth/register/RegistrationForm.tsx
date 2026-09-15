@@ -1,9 +1,39 @@
 // frontend/src/components/auth/register/RegistrationForm.tsx
+
+// TODO password validator
+
 "use client"
 
 import Link from "next/link"
+import { useState } from "react"
+import { RegisterForm } from "@/types/auth"
+import { useRegister } from "@/mutations/auth/useRegister"
 
 export function RegistrationForm() {
+    const mutation = useRegister();
+
+    const [formData, setFormData] = useState<RegisterForm>({
+        name: "",
+        email: "",
+        password: ""
+    });
+
+    // Function to store input changes
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value // matches input name
+        }))
+    }
+
+    // Function to handle submit
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+
+        mutation.mutate(formData)
+    }
+
     return (
         <>
             {/* Logo */}
@@ -28,13 +58,16 @@ export function RegistrationForm() {
                 <p className="text-sm mb-8" style={{ color: "#94A3B8" }}>
                     Create your secure journaling space
                 </p>
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                     <label className="block text-xs font-medium mb-2" style={{ color: "#94A3B8" }}>Full Name</label>
                     <input
+                        disabled={mutation.isPending}
+                        required
                         type="text"
-                        // value={name}
-                        // onChange={(e) => setName(e.target.value)}
+                        name="name"
+                        value={formData?.name}
+                        onChange={handleChange}
                         placeholder="Alex Morgan"
                         className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-text-muted transition-all duration-200"
                         style={{
@@ -49,9 +82,12 @@ export function RegistrationForm() {
                     <div>
                         <label className="block text-xs font-medium mb-2" style={{ color: "#94A3B8" }}>Email</label>
                         <input
+                        disabled={mutation.isPending}
+                        required
                         type="email"
-                        // value={email}
-                        // onChange={(e) => setEmail(e.target.value)}
+                        name="email"
+                        value={formData?.email}
+                        onChange={handleChange}
                         placeholder="you@example.com"
                         className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-text-muted transition-all duration-200"
                         style={{ background: "#0B0F17", border: "1px solid #2A354D" }}
@@ -63,9 +99,12 @@ export function RegistrationForm() {
                     <div>
                         <label className="block text-xs font-medium mb-2" style={{ color: "#94A3B8" }}>Password</label>
                         <input
+                        disabled={mutation.isPending}
+                        required
                         type="password"
-                        // value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
+                        name="password"
+                        value={formData?.password}
+                        onChange={handleChange}
                         placeholder="••••••••"
                         className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-text-muted transition-all duration-200"
                         style={{ background: "#0B0F17", border: "1px solid #2A354D" }}
@@ -76,14 +115,17 @@ export function RegistrationForm() {
 
                     <button
                         type="submit"
+                        disabled={mutation.isPending}
                         className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] mt-2"
                         style={{
                         background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
                         boxShadow: "0 4px 20px rgba(99,102,241,0.35)",
                         }}
                     >
-                        Create Account
+                        {mutation.isPending ? 'Creating account...' : 'Create Account'}
                     </button>
+                    {mutation.isError && <p style={{ color: 'red' }}>Error: {mutation.error.message}</p>}
+                    {mutation.isSuccess && <p style={{ color: 'green' }}>Registration successful!</p>}
                 </form>
 
                 <div
@@ -98,7 +140,7 @@ export function RegistrationForm() {
                 </div>
 
                 <p className="text-center text-xs mt-5" style={{ color: "#4B5B73" }}>
-                    Don&apos;t have an account?{" "}
+                    Already have an account?{" "}
                     <Link href="/login" className="font-medium transition-colors hover:opacity-80" style={{ color: "#818CF8" }}>
                         Sign in
                     </Link>
