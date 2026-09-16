@@ -24,7 +24,7 @@ def register(
             detail={"message": e.message, "code": e.code},
         )
 
-    return UserRegisterResponse(email=user.email, name=user.name)
+    return user
 
 # POST route for authenticating user
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
