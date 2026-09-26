@@ -1,5 +1,6 @@
 // frontend/src/lib/api/auth.ts
 import { RegisterForm } from "@/types/auth";
+import { parseApiError, type FastApiValidationError } from "./parseApiError";
 
 const apiURL = process.env.NEXT_PUBLIC_APP_URL
 
@@ -15,8 +16,14 @@ export async function registerUser(formData: RegisterForm) {
     })
 
     if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Registration failed")
+        let errorData: unknown
+        try{
+            errorData = await res.json();
+        }
+        catch{
+            throw new Error("Registration failed")
+        }
+        throw new Error(parseApiError(errorData as FastApiValidationError, "Registration failed"))
     }
 
     return await res.json()
