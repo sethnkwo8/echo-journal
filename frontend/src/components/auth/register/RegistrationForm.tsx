@@ -1,7 +1,5 @@
 // frontend/src/components/auth/register/RegistrationForm.tsx
 
-// TODO password validator
-
 "use client"
 
 import Link from "next/link"
@@ -18,6 +16,20 @@ export function RegistrationForm() {
         password: ""
     });
 
+    // Password requirements
+    const requirements = [
+        { label: "At least 8 characters", test: (pw: string) => pw.length >= 8 },
+        { label: "At least one uppercase letter", test: (pw: string) => /[A-Z]/.test(pw) },
+        { label: "At least one lowercase letter", test: (pw: string) => /[a-z]/.test(pw) },
+        { label: "At least one number", test: (pw: string) => /\d/.test(pw) },
+        {
+          label: "At least one symbol (@, $, !, etc.)",
+          test: (pw: string) => /[!@#$%^&*(),.?":{}|<>_-]/.test(pw),
+        },
+    ];
+
+    const isPasswordValid = requirements.every(req => req.test(formData.password))
+
     // Function to store input changes
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
@@ -30,6 +42,7 @@ export function RegistrationForm() {
     // Function to handle submit
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
+        if (!isPasswordValid) return;
 
         mutation.mutate(formData)
     }
@@ -111,12 +124,22 @@ export function RegistrationForm() {
                         onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
                         onBlur={(e) => (e.target.style.borderColor = "#2A354D")}
                         />
+                        {/* Password checklist */}
+                        <div className="pt-2 space-y-1">
+                            {requirements.map((req) => {
+                                const isMet = req.test(formData.password);
+                                return (
+                                    <p key={req.label} className={`text-xs flex items-center gap-2 ${isMet ? "text-green-600" : "[#64748B]"}`}>
+                                        {isMet ? "✓" : "○"} {req.label}
+                                    </p>
+                                );
+                            })}
+                        </div>
                     </div>
-
                     <button
                         type="submit"
-                        disabled={mutation.isPending}
-                        className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] mt-2"
+                        disabled={!isPasswordValid || mutation.isPending}
+                        className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         style={{
                         background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
                         boxShadow: "0 4px 20px rgba(99,102,241,0.35)",
