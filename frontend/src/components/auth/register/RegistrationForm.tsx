@@ -6,6 +6,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { RegisterForm } from "@/types/auth"
 import { useRegister } from "@/mutations/auth/useRegister"
+import { Eye, EyeOff } from "lucide-react"
 
 export function RegistrationForm() {
     const mutation = useRegister();
@@ -15,6 +16,12 @@ export function RegistrationForm() {
         email: "",
         password: ""
     });
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+
+    const [passwordFocused, setPasswordFocused] = useState(false);
+
+    const showPasswordRequirements =
+        passwordFocused || formData.password.length > 0;
 
     // Password requirements
     const requirements = [
@@ -50,7 +57,7 @@ export function RegistrationForm() {
     return (
         <>
             {/* Logo */}
-            <div className="flex items-center gap-2 mb-12">
+            <Link href="/" className="flex items-center gap-2 mb-12">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 4px 20px rgba(99,102,241,0.4)" }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -60,7 +67,7 @@ export function RegistrationForm() {
                 </svg>
                 </div>
                 <span className="text-2xl font-bold text-white" style={{ fontFamily: "Outfit, sans-serif" }}>Echo</span>
-            </div>
+            </Link>
             <div
                 className="w-full max-w-sm rounded-2xl p-8 animate-fade-in-up"
                 style={{ background: "#1E2638", border: "1px solid #2A354D", boxShadow: "0 24px 64px rgba(0,0,0,0.5)" }}
@@ -111,30 +118,67 @@ export function RegistrationForm() {
 
                     <div>
                         <label className="block text-xs font-medium mb-2" style={{ color: "#94A3B8" }}>Password</label>
+                        <div className="relative">
                         <input
                         disabled={mutation.isPending}
                         required
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         value={formData?.password}
                         onChange={handleChange}
                         placeholder="••••••••"
-                        className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-text-muted transition-all duration-200"
-                        style={{ background: "#0B0F17", border: "1px solid #2A354D" }}
-                        onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
-                        onBlur={(e) => (e.target.style.borderColor = "#2A354D")}
+                        className="w-full rounded-xl py-3 pl-4 pr-11 text-sm text-white placeholder-text-muted transition-all duration-200"
+                        style={{ background: "#0B0F17", border: "1px solid #2A354D", outline: "none" }}
+                        onFocus={(e) => {
+                            setPasswordFocused(true);
+                            e.target.style.borderColor = "#6366F1";
+                        }}
+                        onBlur={(e) => {
+                            setPasswordFocused(false);
+                            e.target.style.borderColor = "#2A354D";
+                        }}
                         />
-                        {/* Password checklist */}
-                        <div className="pt-2 space-y-1">
-                            {requirements.map((req) => {
-                                const isMet = req.test(formData.password);
-                                return (
-                                    <p key={req.label} className={`text-xs flex items-center gap-2 ${isMet ? "text-green-600" : "[#64748B]"}`}>
-                                        {isMet ? "✓" : "○"} {req.label}
-                                    </p>
-                                );
-                            })}
+                        <button
+                            type="button"
+                            disabled={mutation.isPending}
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            onMouseDown={(e) => e.preventDefault()}
+                            aria-label={showPassword ? "Hide password" : "Show password"}
+                            className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#64748B] transition-colors duration-200 hover:bg-[rgba(99,102,241,0.1)] hover:text-[#818CF8] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/50"
+                        >
+                            {showPassword ? (
+                                <EyeOff size={18} strokeWidth={2} aria-hidden />
+                            ) : (
+                                <Eye size={18} strokeWidth={2} aria-hidden />
+                            )}
+                        </button>
                         </div>
+                        {showPasswordRequirements && (
+                            <ul
+                                className="mt-2 space-y-1.5 animate-fade-in-up"
+                                aria-live="polite"
+                                aria-label="Password requirements"
+                            >
+                                {requirements.map((req) => {
+                                    const isMet = req.test(formData.password);
+                                    return (
+                                        <li
+                                            key={req.label}
+                                            className="text-xs flex items-center gap-2 transition-colors duration-200"
+                                            style={{ color: isMet ? "#10B981" : "#64748B" }}
+                                        >
+                                            <span
+                                                className="w-3.5 shrink-0 text-center font-medium"
+                                                aria-hidden
+                                            >
+                                                {isMet ? "✓" : "○"}
+                                            </span>
+                                            {req.label}
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        )}
                     </div>
                     <button
                         type="submit"
@@ -147,8 +191,16 @@ export function RegistrationForm() {
                     >
                         {mutation.isPending ? 'Creating account...' : 'Create Account'}
                     </button>
-                    {mutation.isError && <p style={{ color: 'red' }}>Error: {mutation.error.message}</p>}
-                    {mutation.isSuccess && <p style={{ color: 'green' }}>Registration successful!</p>}
+                    {mutation.isError && (
+                        <p className="text-xs mt-2" style={{ color: "#F87171" }}>
+                            {mutation.error.message}
+                        </p>
+                    )}
+                    {mutation.isSuccess && (
+                        <p className="text-xs mt-2" style={{ color: "#10B981" }}>
+                            Registration successful!
+                        </p>
+                    )}
                 </form>
 
                 <div
