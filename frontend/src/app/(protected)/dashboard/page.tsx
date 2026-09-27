@@ -1,4 +1,4 @@
-// frontend/src/app/dashboard/page.tsx
+// frontend/src/app/(protected)/dashboard
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
