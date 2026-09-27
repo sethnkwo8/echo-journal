@@ -2,12 +2,45 @@
 "use client"
 
 import Link from "next/link"
+import { useState } from "react"
+import { useLogin } from "@/mutations/auth/useLogin"
+import { LoginFormType } from "@/types/auth"
+import { Eye, EyeOff } from "lucide-react"
 
 export function LoginForm() {
+    const mutation = useLogin();
+
+    const [formData, setFormData] = useState<LoginFormType>({
+        email: "",
+        password: ""
+    });
+
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+
+    const passwordLengthCheck = formData.password.length >= 8
+
+    // Function to store input changes
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value // matches input name
+        }))
+    }
+
+    // Function to handle submit
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+
+        if (!passwordLengthCheck) return
+
+        mutation.mutate(formData)
+    }
+
     return (
         <>
             {/* Logo */}
-            <div className="flex items-center gap-2 mb-12">
+            <Link href="/" className="flex items-center gap-2 mb-12">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 4px 20px rgba(99,102,241,0.4)" }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -17,7 +50,7 @@ export function LoginForm() {
                 </svg>
                 </div>
                 <span className="text-2xl font-bold text-white" style={{ fontFamily: "Outfit, sans-serif" }}>Echo</span>
-            </div>
+            </Link>
             <div
                 className="w-full max-w-sm rounded-2xl p-8 animate-fade-in-up"
                 style={{ background: "#1E2638", border: "1px solid #2A354D", boxShadow: "0 24px 64px rgba(0,0,0,0.5)" }}
@@ -28,13 +61,16 @@ export function LoginForm() {
                 <p className="text-sm mb-8" style={{ color: "#94A3B8" }}>
                     Sign in to continue to Echo
                 </p>
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-xs font-medium mb-2" style={{ color: "#94A3B8" }}>Email</label>
                         <input
+                        name="email"
+                        disabled={mutation.isPending}
+                        required
                         type="email"
-                        // value={email}
-                        // onChange={(e) => setEmail(e.target.value)}
+                        value={formData.email}
+                        onChange={handleChange}
                         placeholder="you@example.com"
                         className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-text-muted transition-all duration-200"
                         style={{ background: "#0B0F17", border: "1px solid #2A354D" }}
@@ -45,28 +81,58 @@ export function LoginForm() {
 
                     <div>
                         <label className="block text-xs font-medium mb-2" style={{ color: "#94A3B8" }}>Password</label>
-                        <input
-                        type="password"
-                        // value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••"
-                        className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-text-muted transition-all duration-200"
-                        style={{ background: "#0B0F17", border: "1px solid #2A354D" }}
-                        onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
-                        onBlur={(e) => (e.target.style.borderColor = "#2A354D")}
-                        />
+                            <div className="relative">
+                                <input
+                                name="password"
+                                disabled={mutation.isPending}
+                                required
+                                type={showPassword ? "text" : "password"}
+                                value={formData.password}
+                                onChange={handleChange}
+                                placeholder="••••••••"
+                                className="w-full rounded-xl py-3 pl-4 pr-11 text-sm text-white placeholder-text-muted transition-all duration-200"
+                                style={{ background: "#0B0F17", border: "1px solid #2A354D", outline: "none" }}
+                                onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
+                                onBlur={(e) => (e.target.style.borderColor = "#2A354D")}
+                                />
+                                <button
+                                    type="button"
+                                    disabled={mutation.isPending}
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    onMouseDown={(e) => e.preventDefault()}
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                    className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#64748B] transition-colors duration-200 hover:bg-[rgba(99,102,241,0.1)] hover:text-[#818CF8] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/50"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff size={18} strokeWidth={2} aria-hidden />
+                                    ) : (
+                                        <Eye size={18} strokeWidth={2} aria-hidden />
+                                    )}
+                                </button>
+                            </div>
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] mt-2"
+                        disabled={!passwordLengthCheck || mutation.isPending}
+                        className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         style={{
                         background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
                         boxShadow: "0 4px 20px rgba(99,102,241,0.35)",
                         }}
                     >
-                        Sign In
+                        {mutation.isPending ? "Signing in..." : "Sign In"}
                     </button>
+                    {mutation.isError && (
+                        <p className="text-xs mt-2" style={{ color: "#F87171" }}>
+                            {mutation.error.message}
+                        </p>
+                    )}
+                    {mutation.isSuccess && (
+                        <p className="text-xs mt-2" style={{ color: "#10B981" }}>
+                            Log in successful!
+                        </p>
+                    )}
                 </form>
 
                 <div
