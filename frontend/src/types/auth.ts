@@ -6,3 +6,9 @@ export interface RegisterForm {
     email: string;
     password: string;
 }
+
+// Interface for login form
+export interface LoginFormType{
+    email: string;
+    password: string;
+}
