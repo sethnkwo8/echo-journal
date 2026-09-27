@@ -119,39 +119,39 @@ export function RegistrationForm() {
                     <div>
                         <label className="block text-xs font-medium mb-2" style={{ color: "#94A3B8" }}>Password</label>
                         <div className="relative">
-                        <input
-                        disabled={mutation.isPending}
-                        required
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        value={formData?.password}
-                        onChange={handleChange}
-                        placeholder="••••••••"
-                        className="w-full rounded-xl py-3 pl-4 pr-11 text-sm text-white placeholder-text-muted transition-all duration-200"
-                        style={{ background: "#0B0F17", border: "1px solid #2A354D", outline: "none" }}
-                        onFocus={(e) => {
-                            setPasswordFocused(true);
-                            e.target.style.borderColor = "#6366F1";
-                        }}
-                        onBlur={(e) => {
-                            setPasswordFocused(false);
-                            e.target.style.borderColor = "#2A354D";
-                        }}
-                        />
-                        <button
-                            type="button"
+                            <input
                             disabled={mutation.isPending}
-                            onClick={() => setShowPassword((prev) => !prev)}
-                            onMouseDown={(e) => e.preventDefault()}
-                            aria-label={showPassword ? "Hide password" : "Show password"}
-                            className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#64748B] transition-colors duration-200 hover:bg-[rgba(99,102,241,0.1)] hover:text-[#818CF8] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/50"
-                        >
-                            {showPassword ? (
-                                <EyeOff size={18} strokeWidth={2} aria-hidden />
-                            ) : (
-                                <Eye size={18} strokeWidth={2} aria-hidden />
-                            )}
-                        </button>
+                            required
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            value={formData?.password}
+                            onChange={handleChange}
+                            placeholder="••••••••"
+                            className="w-full rounded-xl py-3 pl-4 pr-11 text-sm text-white placeholder-text-muted transition-all duration-200"
+                            style={{ background: "#0B0F17", border: "1px solid #2A354D", outline: "none" }}
+                            onFocus={(e) => {
+                                setPasswordFocused(true);
+                                e.target.style.borderColor = "#6366F1";
+                            }}
+                            onBlur={(e) => {
+                                setPasswordFocused(false);
+                                e.target.style.borderColor = "#2A354D";
+                            }}
+                            />
+                            <button
+                                type="button"
+                                disabled={mutation.isPending}
+                                onClick={() => setShowPassword((prev) => !prev)}
+                                onMouseDown={(e) => e.preventDefault()}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#64748B] transition-colors duration-200 hover:bg-[rgba(99,102,241,0.1)] hover:text-[#818CF8] disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]/50"
+                            >
+                                {showPassword ? (
+                                    <EyeOff size={18} strokeWidth={2} aria-hidden />
+                                ) : (
+                                    <Eye size={18} strokeWidth={2} aria-hidden />
+                                )}
+                            </button>
                         </div>
                         {showPasswordRequirements && (
                             <ul
