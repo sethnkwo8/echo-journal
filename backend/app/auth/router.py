@@ -1,8 +1,11 @@
 # backend/app/auth/router.py
 from fastapi import APIRouter, Cookie, Response, Depends, HTTPException, status
+
+from backend.app.models.user import User
 from .exceptions import UnauthorizedError, UserAlreadyExistsError, InvalidCredentialsError
 from .schema import UserLoginRequest, UserRegisterResponse, UserRegisterRequest, Token
 from .service import register_user, authenticate_user, create_access_token, create_refresh_token, refresh_access_token
+from .dependencies import get_current_user
 from sqlmodel import Session
 from app.database import get_session
 from typing import Annotated
@@ -95,3 +98,8 @@ def logout(response: Response):
     )
 
     return {"message" : "Logged out successfully"}
+
+# GET route to get current logged in user
+@router.get("/me", response_model=UserRegisterResponse, status_code=status.HTTP_200_OK)
+def me(user: User = Depends(get_current_user)):
+    return user
