@@ -61,9 +61,6 @@ export async function refreshToken() {
     const res = await fetch(`${apiURL}/auth/refresh`, {
         method: "POST",
         credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
     })
 
     if (!res.ok) {
@@ -105,4 +102,25 @@ export async function getMe() {
     const user: AuthUser = await res.json()
 
     return user
+}
+
+// POST fetch call to logout user
+export async function logoutUser() {
+    const res = await fetch(`${apiURL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+    })
+
+    if (!res.ok) {
+        let errorData: unknown
+        try{
+            errorData = await res.json();
+        }
+        catch{
+            throw new Error("Failed to logout user")
+        }
+        throw new Error(parseApiError(errorData as FastApiValidationError, "Failed to logout user"))
+    }
+
+    return await res.json()
 }
