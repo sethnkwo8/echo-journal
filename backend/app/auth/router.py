@@ -1,7 +1,7 @@
 # backend/app/auth/router.py
 from fastapi import APIRouter, Cookie, Response, Depends, HTTPException, status
 
-from backend.app.models.user import User
+from app.models.user import User
 from .exceptions import UnauthorizedError, UserAlreadyExistsError, InvalidCredentialsError
 from .schema import UserLoginRequest, UserRegisterResponse, UserRegisterRequest, Token
 from .service import register_user, authenticate_user, create_access_token, create_refresh_token, refresh_access_token
