@@ -5,3 +5,11 @@ export const metadata: Metadata = {
   title: "Settings",
   description: "Manage your account preferences, privacy settings, and audio defaults.",
 };
+
+export default function Settings() {
+  return (
+    <>
+      <h1>Settings</h1>
+    </>
+  )
+}
