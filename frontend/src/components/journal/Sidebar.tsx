@@ -13,6 +13,14 @@ export function Sidebar() {
     const {isPending: isLoggingOut, mutate: logoutUser} = useLogout();
     const {data: user} = useMe({enabled: true})
 
+    const initials = user?.name
+      .split(' ')                  
+      .filter(name => name !== '') 
+      .map(name => name[0])        
+      .join('')                    
+      .toUpperCase();              
+
+
     function handleLogout() {
         logoutUser()
     };
@@ -126,7 +134,7 @@ export function Sidebar() {
               className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-semibold text-white transition-transform duration-200 group-hover:scale-110 group-hover:ring-2 group-hover:ring-indigo-400/40"
               style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)" }}
             >
-              {user?.name.charAt(0)}
+              {initials}
             </div>
             <div className="flex-1 min-w-0 text-left">
               <p className="text-sm font-medium text-white truncate">{user?.name}</p>

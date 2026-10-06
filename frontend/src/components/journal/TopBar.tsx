@@ -13,6 +13,12 @@ export function TopBar({user, onNewEntryClick}: TopBarProps) {
     const hour = new Date().getHours();
     const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
     const firstName = user.name.split(" ")[0];
+    const initials = user?.name
+      .split(' ')                  
+      .filter(name => name !== '') 
+      .map(name => name[0])        
+      .join('')                    
+      .toUpperCase(); 
 
     return (
         <header className="sticky top-0 z-30 px-5 py-4 flex items-center justify-between"
@@ -35,7 +41,7 @@ export function TopBar({user, onNewEntryClick}: TopBarProps) {
             </button>
             <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold text-white"
                 style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)" }}>
-                {firstName.charAt(0)}
+                {initials}
             </div>
             </div>
         </header>
