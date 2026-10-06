@@ -1,4 +1,5 @@
 // frontend/src/app/(protected)/profile/page.tsx
+import { NewEntryPage } from "@/components/new-entry/NewEntryPage";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,10 +8,7 @@ export const metadata: Metadata = {
   };
 
 export default function NewRecord() {
-    
     return (
-        <>
-            <h1>New Record</h1>
-        </>
+        <NewEntryPage />
     )
 }

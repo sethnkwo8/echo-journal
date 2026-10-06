@@ -1,5 +1,6 @@
 // frontend/src/app/(protected)/dashboard
 import type { Metadata } from "next";
+import { JournalPage } from "@/components/journal/JournalPage";
 
 export const metadata: Metadata = {
   title: "Journal",
@@ -8,8 +9,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="flex-1 overflow-y-auto pb-24 md:pb-8">
-      <h1>Dashboard</h1>
-    </div>
+    <JournalPage />
   )
 }

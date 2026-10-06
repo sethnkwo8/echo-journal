@@ -1,4 +1,5 @@
 // frontend/src/app/(protected)/profile/page.tsx
+import { ProfilePage } from "@/components/profile/ProfilePage";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,8 +9,6 @@ export const metadata: Metadata = {
 
 export default function Profile() {
     return (
-        <>
-        <h1>Profile</h1>
-        </>
+        <ProfilePage />
     )
 }

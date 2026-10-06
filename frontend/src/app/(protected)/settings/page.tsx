@@ -1,4 +1,5 @@
 // frontend/src/app/settings/page.tsx
+import { SettingsPage } from "@/components/settings/SettingsPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,8 +9,6 @@ export const metadata: Metadata = {
 
 export default function Settings() {
   return (
-    <>
-      <h1>Settings</h1>
-    </>
+    <SettingsPage />
   )
 }
