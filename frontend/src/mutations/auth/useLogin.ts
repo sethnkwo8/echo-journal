@@ -16,7 +16,7 @@ export function useLogin() {
         onSuccess: async (data: {access_token: string; token_type?: string}) => {
             setAccessToken(data.access_token);
             await queryClient.invalidateQueries({ queryKey: meQueryKey }); // to refetch user on login with new token so previous stale data removes
-            router.replace("/dashboard");
+            router.replace("/journal");
         },
         onError: (error) => {
             console.error('Something went wrong:', error.message)
