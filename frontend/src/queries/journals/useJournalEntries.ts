@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // Query for getting all user journal entries
 export const journalEntriesQueryKey = ['journal_entries'] as const;
+
 export function useJournalEntries(options?: { enabled?: boolean }) {
     return useQuery<JournalEntry[]>({
         queryKey: journalEntriesQueryKey,

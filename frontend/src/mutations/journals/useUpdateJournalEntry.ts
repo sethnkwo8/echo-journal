@@ -1,0 +1,1 @@
+// frontend/src/mutations/journals/useUpdateJournalEntry.ts
