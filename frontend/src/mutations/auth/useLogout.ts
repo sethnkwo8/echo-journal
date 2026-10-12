@@ -4,6 +4,8 @@ import { logoutUser } from "@/lib/api/auth";
 import { clearAccessToken } from "@/lib/auth/session";
 import { useRouter } from "next/navigation";
 import { meQueryKey } from "@/queries/auth/useMe";
+import { journalEntriesQueryKey } from "@/queries/journals/useJournalEntries";
+import { journalEntryKeys } from "@/queries/journals/useJournalEntry";
 
 export function useLogout(){
     const queryClient = useQueryClient();
@@ -15,6 +17,8 @@ export function useLogout(){
         onSettled() {
             clearAccessToken();
             queryClient.removeQueries({queryKey: meQueryKey});
+            queryClient.removeQueries({queryKey: journalEntriesQueryKey});
+            queryClient.removeQueries({queryKey: journalEntryKeys.all});
             router.replace("/login");
         },
 
