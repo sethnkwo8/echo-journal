@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react";
 import { JournalEntryForm } from "@/types/journal";
 import { useCreateJournalEntry } from "@/mutations/journals/useCreateJournalEntry";
+import { Title } from "./Title";
 
 export function NewEntryPage() {
     const router = useRouter();
@@ -17,6 +18,14 @@ export function NewEntryPage() {
 
     const canSave = formData.title.trim().length >= 3 && formData.content.trim().length >= 3;
 
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value // matches input name
+        }))
+    }
+
     function handleSave() {
         const payloadData = {
             title: formData.title.trim(),
@@ -27,7 +36,13 @@ export function NewEntryPage() {
 
     return (
         <div className="flex-1 overflow-y-auto pb-24 md:pb-8 animate-fade-in-up">
+            {/* TopBar */}
             <TopBar onBack={() => router.back()} handleSave={handleSave} saved={mutation.isSuccess} isSaving={mutation.isPending} canSave={canSave}/>
+            <div className="px-5 py-6 space-y-5 max-w-2xl mx-auto">
+                {/* Title */}
+                <Title title={formData.title} setTitle={handleChange}/>
+            </div>
+            {/* TODO: Moods and Tags */}
         </div>
     )
 }
