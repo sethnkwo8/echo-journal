@@ -3,15 +3,15 @@
 
 interface TitleProps {
     title: string;
-    setTitle(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
+    onChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
 }
-export function Title({title, setTitle}: TitleProps) {
+export function Title({title, onChange}: TitleProps) {
     return (
         <div>
           <input
             value={title}
             name="title"
-            onChange={setTitle}
+            onChange={onChange}
             placeholder="Entry title..."
             className="w-full bg-transparent text-xl font-bold text-white placeholder-[#2A354D] focus:outline-none"
             style={{ fontFamily: "Outfit, sans-serif" }}
