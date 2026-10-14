@@ -16,10 +16,16 @@ export function Navbar() {
           </div>
           <span className="text-white font-bold text-xl" style={{ fontFamily: "Outfit, sans-serif" }}>Echo</span>
         </div>
-        <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({label, id}) => (
-            <a key={id} href="#how-it-works" className="text-sm font-medium transition-colors hover:text-white"
-              style={{ color: "#94A3B8" }}>{label}</a>
+        <div className="hidden md:flex w-56">
+          {NAV_LINKS.map(({ label, id }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className="flex-1 text-center text-sm font-medium transition-colors hover:text-white"
+              style={{ color: "#94A3B8" }}
+            >
+              {label}
+            </a>
           ))}
         </div>
         <div className="flex items-center gap-3">
