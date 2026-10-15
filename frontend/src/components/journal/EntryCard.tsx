@@ -57,7 +57,7 @@ export function EntryCard({entry, onClick}: EntryCardProps) {
             </div>
 
             <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: "#94A3B8" }}>
-                {/* {entry.preview} */}
+                {entry.content.replace(/\s+/g, " ").trim()}
             </p>
 
             <div className="flex items-center justify-between">
