@@ -2,6 +2,7 @@
 "use client"
 
 import React from "react";
+import { getWordCount } from "@/utils/getWordCount";
 
 interface ContentProps {
     content: string;
@@ -9,17 +10,9 @@ interface ContentProps {
 }
 
 export function Content({content, onChange}: ContentProps) {
-    // Function to calculate word count
-    function getWordCount(content: string) {
-        const cleanedText = content.trim()
 
-        if (cleanedText === "") return 0;
-
-        // Split by one or more whitespace characters and get the length
-        return cleanedText.split(/\s+/).length
-    }
-
-    const wordCount = getWordCount(content)
+    const wordCount = getWordCount(content);
+    
     return (
         <div className="rounded-2xl overflow-hidden" style={{ background: "#1E2638", border: "1px solid #2A354D" }}>
           <div className="flex items-center gap-2 px-5 py-3" style={{ borderBottom: "1px solid #2A354D" }}>
