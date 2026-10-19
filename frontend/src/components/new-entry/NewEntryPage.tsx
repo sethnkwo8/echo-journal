@@ -3,7 +3,7 @@
 
 import { TopBar } from "./TopBar"
 import { useRouter } from "next/navigation"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { JournalEntryForm } from "@/types/journal";
 import { useCreateJournalEntry } from "@/mutations/journals/useCreateJournalEntry";
 import { Title } from "./Title";
@@ -38,6 +38,23 @@ export function NewEntryPage() {
         }
         mutation.mutate(payloadData);
     }
+
+    useEffect(() => {
+
+        function getDraft() {
+            const storedDraft = sessionStorage.getItem("contentDraft");
+            if (storedDraft) {
+                setFormData((prev) => ({
+                    ...prev,
+                    content: storedDraft
+                }))
+            }
+
+            sessionStorage.removeItem("contentDraft");
+        }
+
+        getDraft();
+    }, [])
 
     return (
         <div className="flex-1 overflow-y-auto pb-24 md:pb-8 animate-fade-in-up">
