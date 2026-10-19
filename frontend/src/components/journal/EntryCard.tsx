@@ -4,14 +4,15 @@
 import { JournalEntry } from "@/types/journal";
 import { formatJournalEntryDate } from "@/utils/formatJournalEntryDate";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface EntryCardProps {
     entry: JournalEntry;
-    onClick(): void;
 }
 
-export function EntryCard({entry, onClick}: EntryCardProps) {
+export function EntryCard({entry}: EntryCardProps) {
     const [menuOpen, setMenuOpen] = useState(false);
+    const router = useRouter();
 
     return (
         <div
@@ -21,7 +22,7 @@ export function EntryCard({entry, onClick}: EntryCardProps) {
                 border: "1px solid #2A354D",
                 boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
             }}
-            onClick={onClick}
+            onClick={() => router.push(`/journal/${entry.id}`)}
             >
             <div className="flex items-start justify-between gap-3 mb-3">
                 <h3 className="text-base font-semibold text-white leading-snug flex-1 group-hover:text-indigo-300 transition-colors">
