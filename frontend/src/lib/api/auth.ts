@@ -81,10 +81,15 @@ export async function refreshToken() {
 
 // Fetch function to get current user
 export async function getMe() {
+    const token = getAccessToken();
+
+    if (!token) {
+        throw new Error("No access token")
+    }
     const res = await fetch(`${apiURL}/auth/me`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
+            Authorization: `Bearer ${token}`,
         }
     })
     

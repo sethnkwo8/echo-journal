@@ -16,7 +16,8 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
 
         async function bootstrap() {
             try {
-                if (getAccessToken() === null) {
+                const token = getAccessToken();
+                if (!token) {
                     const accessToken = await refreshToken();
                     if (cancelled) return;
                     setAccessToken(accessToken);
