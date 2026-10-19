@@ -1,4 +1,4 @@
-// frontend/src/components/journal/Sidebar.tsx
+// frontend/src/components/layout/Sidebar.tsx
 "use client"
 
 import { NavTab } from "@/types/nav";
