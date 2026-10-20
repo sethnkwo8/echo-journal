@@ -1,7 +1,8 @@
 // frontend/src/lib/api/auth.ts
 import { LoginFormType, RegisterForm, Token, AuthUser } from "@/types/auth";
 import { parseApiError, type FastApiValidationError } from "./parseApiError";
-import { getAccessToken } from "../auth/session";
+import { authenticatedFetch } from "./authenticatedFetch";
+import { SessionExpiredError } from "../auth/errors";
 
 const apiURL = process.env.NEXT_PUBLIC_APP_URL
 
@@ -76,21 +77,16 @@ export async function refreshToken() {
 
     const tokenData: Token = await res.json();
 
+    if (!tokenData.access_token?.trim()) throw new SessionExpiredError()
+
     return tokenData.access_token;
 }
 
 // Fetch function to get current user
 export async function getMe() {
-    const token = getAccessToken();
 
-    if (!token) {
-        throw new Error("No access token")
-    }
-    const res = await fetch(`${apiURL}/auth/me`, {
+    const res = await authenticatedFetch(`${apiURL}/auth/me`, {
         method: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
     })
     
     if (!res.ok) {

@@ -1,18 +1,14 @@
 // frontend/src/lib/api/journal.ts
 import { parseApiError, type FastApiValidationError } from "./parseApiError";
 import { JournalEntry, JournalEntryForm, JournalEntryUpdateForm } from "@/types/journal";
-import { getAccessToken } from "../auth/session";
+import { authenticatedFetch } from "./authenticatedFetch";
 
 const apiURL = process.env.NEXT_PUBLIC_APP_URL;
 
 // GET fetch call to get all journal entries
 export async function getJournalEntries() {
-    const res = await fetch(`${apiURL}/journals/`, {
+    const res = await authenticatedFetch(`${apiURL}/journals/`, {
         method: "GET",
-        credentials: "include",
-        headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-        }
     });
 
     if (!res.ok) {
@@ -33,12 +29,8 @@ export async function getJournalEntries() {
 
 // GET fetch call to get a journal entry
 export async function getJournalEntry(entry_id:string) {
-    const res = await fetch(`${apiURL}/journals/${entry_id}`, {
+    const res = await authenticatedFetch(`${apiURL}/journals/${entry_id}`, {
         method: "GET",
-        credentials: "include",
-        headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-        }
     });
 
     if (!res.ok) {
@@ -59,11 +51,9 @@ export async function getJournalEntry(entry_id:string) {
 
 // POST fetch call to create a journal entry
 export async function createJournalEntry(formData: JournalEntryForm) {
-    const res = await fetch(`${apiURL}/journals/`, {
+    const res = await authenticatedFetch(`${apiURL}/journals/`, {
         method: "POST",
-        credentials: "include",
         headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(formData)
@@ -86,11 +76,9 @@ export async function createJournalEntry(formData: JournalEntryForm) {
 }
 
 export async function updateJournalEntry(entry_id: string, formData: JournalEntryUpdateForm) {
-    const res = await fetch(`${apiURL}/journals/${entry_id}`, {
+    const res = await authenticatedFetch(`${apiURL}/journals/${entry_id}`, {
         method: "PATCH",
-        credentials: "include",
         headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(formData)
@@ -113,12 +101,8 @@ export async function updateJournalEntry(entry_id: string, formData: JournalEntr
 }
 
 export async function deleteJournalEntry(entry_id: string) {
-    const res = await fetch(`${apiURL}/journals/${entry_id}`, {
+    const res = await authenticatedFetch(`${apiURL}/journals/${entry_id}`, {
         method: "DELETE",
-        credentials: "include",
-        headers: {
-            Authorization: `Bearer ${getAccessToken()}`,
-        }
     });
 
     if (!res.ok) {
