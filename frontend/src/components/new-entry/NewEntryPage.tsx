@@ -68,7 +68,7 @@ export function NewEntryPage() {
                 {/* Title */}
                 <Title title={formData.title} onChange={handleChange}/>
                 {/* Content */}
-                <Content content={formData.content} onChange={handleChange}/>
+                <Content headerText="Journal entry" content={formData.content} onChange={handleChange}/>
                 {/* TODO: Moods and Tags */}
                 {/* Privacy Note */}
                 <PrivacyNote />

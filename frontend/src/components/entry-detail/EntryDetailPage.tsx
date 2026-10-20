@@ -3,10 +3,7 @@
 
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useJournalEntry } from "@/queries/journals/useJournalEntry"
-import { TopBar } from "./TopBar";
-import { formatJournalEntryDate } from "@/utils/formatJournalEntryDate";
 import { ErrorMessage } from "../new-entry/ErrorMessage";
 import { EntryDetailSkeleton } from "../loading/EntryDetailSkeleton";
 import { EntryDetailContent } from "./EntryDetailContent";
@@ -14,6 +11,7 @@ import { EntryDetailContent } from "./EntryDetailContent";
 export function EntryDetailPage() {
     const params = useParams();
     const router = useRouter();
+
     const entryId = params.id as string
 
     const journalEntry = useJournalEntry(entryId, {enabled: Boolean(entryId)})

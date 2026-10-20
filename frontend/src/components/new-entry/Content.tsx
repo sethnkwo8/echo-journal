@@ -5,11 +5,12 @@ import React from "react";
 import { getWordCount } from "@/utils/getWordCount";
 
 interface ContentProps {
+    headerText: string;
     content: string;
     onChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void
 }
 
-export function Content({content, onChange}: ContentProps) {
+export function Content({headerText, content, onChange}: ContentProps) {
 
     const wordCount = getWordCount(content);
     
@@ -20,7 +21,7 @@ export function Content({content, onChange}: ContentProps) {
               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" strokeWidth="1.5" />
               <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            <span className="text-xs font-semibold text-white">Journal entry</span>
+            <span className="text-xs font-semibold text-white">{headerText}</span>
             <span className="ml-auto text-xs" style={{ color: "#4B5B73" }}>{wordCount} words</span>
           </div>
           <textarea
