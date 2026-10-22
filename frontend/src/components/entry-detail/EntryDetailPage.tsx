@@ -2,7 +2,6 @@
 "use client"
 
 import { useParams } from "next/navigation"
-import { useRouter } from "next/navigation";
 import { useJournalEntry } from "@/queries/journals/useJournalEntry"
 import { ErrorMessage } from "../new-entry/ErrorMessage";
 import { EntryDetailSkeleton } from "../loading/EntryDetailSkeleton";
@@ -10,7 +9,6 @@ import { EntryDetailContent } from "./EntryDetailContent";
 
 export function EntryDetailPage() {
     const params = useParams();
-    const router = useRouter();
 
     const entryId = params.id as string
 
@@ -29,6 +27,6 @@ export function EntryDetailPage() {
     }
 
     return (
-        <EntryDetailContent entry={journalEntry.data} onBack={() => router.back()}/>
+        <EntryDetailContent entry={journalEntry.data}/>
     );
 }

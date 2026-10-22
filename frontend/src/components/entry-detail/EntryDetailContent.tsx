@@ -16,10 +16,9 @@ import { useRouter } from "next/navigation";
 
 interface EntryDetailContentProps {
     entry: JournalEntry;
-    onBack(): void
 }
 
-export function EntryDetailContent({entry, onBack}: EntryDetailContentProps) {
+export function EntryDetailContent({entry}: EntryDetailContentProps) {
     const router = useRouter();
     const mutation = useUpdateJournalEntry(entry.id);
     const deleteMutation = useDeleteJournalEntry(entry.id)
@@ -44,7 +43,7 @@ export function EntryDetailContent({entry, onBack}: EntryDetailContentProps) {
     function handleDelete() {
         const ok = window.confirm("Delete this entry? This can't be undone.");
         if (!ok) return;
-        
+
         if (deleteMutation.isError) deleteMutation.reset()
 
         deleteMutation.mutate(undefined, {
@@ -76,7 +75,7 @@ export function EntryDetailContent({entry, onBack}: EntryDetailContentProps) {
     return (
         <div className="flex-1 overflow-y-auto pb-24 md:pb-8 animate-fade-in-up">
           {/* Top bar */}
-          <TopBar onBack={onBack} title={title} onChange={handleChange} handleSave={handleSave} handleDelete={handleDelete} saved={mutation.isSuccess && !changed} isSaving={mutation.isPending} canSave={canSave} deleteDisabled={mutation.isPending || deleteMutation.isPending}/>
+          <TopBar onBack={() => router.push("/journal")} title={title} onChange={handleChange} handleSave={handleSave} handleDelete={handleDelete} saved={mutation.isSuccess && !changed} isSaving={mutation.isPending} canSave={canSave} deleteDisabled={mutation.isPending || deleteMutation.isPending}/>
     
           <div className="px-5 py-6 space-y-5 max-w-2xl mx-auto">
             {mutation.isError && (
@@ -89,16 +88,16 @@ export function EntryDetailContent({entry, onBack}: EntryDetailContentProps) {
             <p className="text-sm" style={{ color: "#4B5B73" }}>{formatJournalEntryDate(entry.created_at)}</p>
     
             {/* Audio Player */}
-            <AudioPlayer />
+            {/* <AudioPlayer /> */}
 
             {/* Tags */}
-            <Tags />
+            {/* <Tags /> */}
 
             {/* Transcript */}
             <Content headerText="Transcript" content={content} onChange={handleChange}/>
     
             {/* AI Insights */}
-            <AiInsights />
+            {/* <AiInsights /> */}
           </div>
         </div>
     )
