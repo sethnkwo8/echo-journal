@@ -11,6 +11,7 @@ from app.database import get_session
 from typing import Annotated
 
 router = APIRouter(prefix="/auth")
+REFRESH_MAX_AGE = 7 * 24 * 60 * 60 
 
 # POST route for registering user
 @router.post("/register", response_model=UserRegisterResponse, status_code=status.HTTP_201_CREATED)
@@ -55,6 +56,7 @@ def login(
     response.set_cookie(
         key="refresh_token",
         value=refresh_token,
+        max_age=REFRESH_MAX_AGE,
         secure=False, # Change to true on https
         httponly=True,
         samesite="lax",
@@ -91,6 +93,7 @@ def logout(response: Response):
     # Delete refresh token cookie
     response.delete_cookie(
         key="refresh_token",
+        max_age=REFRESH_MAX_AGE,
         secure=False, # Change to true on https
         httponly=True,
         samesite="lax",
