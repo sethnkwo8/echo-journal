@@ -59,7 +59,7 @@ export function NewEntryPage() {
     return (
         <div className="flex-1 overflow-y-auto pb-24 md:pb-8 animate-fade-in-up">
             {/* TopBar */}
-            <TopBar onBack={() => router.back()} handleSave={handleSave} saved={mutation.isSuccess} isSaving={mutation.isPending} canSave={canSave}/>
+            <TopBar onBack={() => router.push("/journal")} handleSave={handleSave} saved={mutation.isSuccess} isSaving={mutation.isPending} canSave={canSave}/>
             <div className="px-5 py-6 space-y-5 max-w-2xl mx-auto">
                 {/* Save error */}
                 {mutation.isError && (
