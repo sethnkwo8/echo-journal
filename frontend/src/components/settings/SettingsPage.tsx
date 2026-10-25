@@ -1,6 +1,7 @@
 // frontend/src/components/settings/SettingsPage.tsx
 "use client"
 
+import { useState } from "react"
 import { Account } from "./Account"
 import { Appearance } from "./Appearance"
 import { LogoutButton } from "./LogoutButton"
@@ -8,10 +9,13 @@ import { PrivacyAndSecurity } from "./PrivacyAndSecurity"
 import { SettingsHeader } from "./SettingsHeader"
 import { useDeleteJournalEntries } from "@/mutations/journals/useDeleteJournalEntries"
 import { useRouter } from "next/navigation"
+import { useLogout } from "@/mutations/auth/useLogout"
 
 export function SettingsPage() {
     const deleteMutation = useDeleteJournalEntries();
+    const logoutMutation = useLogout();
     const router = useRouter()
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
     function handleDelete() {
         const ok = window.confirm("Delete all entries? This can't be undone.");
@@ -38,8 +42,8 @@ export function SettingsPage() {
                     }
                 />
                 <Appearance />
-                <Account />
-                <LogoutButton />
+                <Account onEdit={() => router.push("/profile")}/>
+                <LogoutButton setShowLogoutConfirm={setShowLogoutConfirm} showLogoutConfirm={showLogoutConfirm} onLogout={logoutMutation.mutate} isLoggingOut={logoutMutation.isPending}/>
             </div>
         </div>
     )
