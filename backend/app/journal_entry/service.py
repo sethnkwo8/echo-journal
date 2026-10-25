@@ -4,8 +4,7 @@ from .schema import JournalEntryCreate, JournalEntryUpdate
 from .exceptions import JournalNotFoundError, UnauthorizedJournalAccess
 from app.models.user import User
 from app.models.journal_entry import JournalEntry
-from app.auth.dependencies import get_current_user
-from sqlmodel import Session, select
+from sqlmodel import Session, select, delete
 
 # Create journal entry service
 def create_entry(entry_payload: JournalEntryCreate, current_user: User, db_session: Session):
@@ -68,6 +67,15 @@ def delete_entry(entry_id: UUID, current_user: User, db_session: Session):
 
     # Delete entry
     db_session.delete(entry)
+    db_session.commit()
+
+    return None
+
+# Service to delete all journal entries
+def delete_all_entries(current_user: User, db_session: Session):
+    # Delete all user entries
+    statement = delete(JournalEntry).where(JournalEntry.user_id == current_user.id)
+    db_session.exec(statement)
     db_session.commit()
 
     return None

@@ -51,8 +51,8 @@ export function EntryCard({entry}: EntryCardProps) {
             <div
                 className="rounded-2xl p-5 cursor-pointer group transition-all duration-200 hover:scale-[1.01] animate-fade-in-up"
                 style={{
-                    background: "#1E2638",
-                    border: "1px solid #2A354D",
+                    background: "var(--app-surface)",
+                    border: "1px solid var(--app-border)",
                     boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
                 }}
                 onClick={() => {
@@ -70,7 +70,7 @@ export function EntryCard({entry}: EntryCardProps) {
                     <div ref={menuRef} className="relative flex-shrink-0">
                         <button
                             className="p-1.5 rounded-lg transition-colors"
-                            style={{ color: "#4B5B73" }}
+                            style={{ color: "var(--app-text-muted)" }}
                             onClick={(e) => { 
                                 e.stopPropagation(); 
                                 if (menuOpen && deleteMutation.isError) deleteMutation.reset(); 
@@ -84,7 +84,7 @@ export function EntryCard({entry}: EntryCardProps) {
                         {menuOpen && (
                             <div
                                 className="absolute right-0 top-8 z-10 rounded-xl overflow-hidden shadow-2xl"
-                                style={{ background: "#252F44", border: "1px solid #2A354D", minWidth: 140 }}
+                                style={{ background: "var(--app-surface-high)", border: "1px solid var(--app-border)", minWidth: 140 }}
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     if (menuOpen) closeMenu();
@@ -97,7 +97,7 @@ export function EntryCard({entry}: EntryCardProps) {
                                         setMenuOpen(false);
                                         router.push(`/journal/${entry.id}`);
                                     }}
-                                    className="w-full px-4 py-2.5 text-sm text-left text-white hover:bg-[#2A354D] transition-colors flex items-center gap-2">
+                                    className="w-full px-4 py-2.5 text-sm text-left text-white hover:bg-[var(--app-border)] transition-colors flex items-center gap-2">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
                                     Edit
                                 </button>
@@ -107,7 +107,7 @@ export function EntryCard({entry}: EntryCardProps) {
                                         e.stopPropagation(); 
                                         handleDelete();
                                     }}
-                                    className="w-full px-4 py-2.5 text-sm text-left hover:bg-[#2A354D] transition-colors flex items-center gap-2 disabled:opacity-50" style={{ color: "#EF4444" }}>
+                                    className="w-full px-4 py-2.5 text-sm text-left hover:bg-[var(--app-border)] transition-colors flex items-center gap-2 disabled:opacity-50" style={{ color: "#EF4444" }}>
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" strokeWidth="1.5" /><path d="M19 6l-1 14H6L5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /><path d="M10 11v6M14 11v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
                                     {deleteMutation.isPending ? "Deleting..." : "Delete"}
                                 </button>
@@ -145,7 +145,7 @@ export function EntryCard({entry}: EntryCardProps) {
                         {entry.mood}
                     </span> */}
                     {/* </div> */}
-                    <span className="text-xs flex-shrink-0" style={{ color: "#4B5B73" }}>
+                    <span className="text-xs flex-shrink-0" style={{ color: "var(--app-text-muted)" }}>
                     {formatJournalEntryDate(entry.created_at)}
                     </span>
                 </div>

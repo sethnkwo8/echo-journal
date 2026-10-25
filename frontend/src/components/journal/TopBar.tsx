@@ -22,9 +22,9 @@ export function TopBar({user, onNewEntryClick}: TopBarProps) {
 
     return (
         <header className="sticky top-0 z-30 px-5 py-4 flex items-center justify-between"
-            style={{ background: "rgba(11,15,23,0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(42,53,77,0.5)" }}>
+            style={{ background: "var(--app-nav-bg)", backdropFilter: "blur(20px)", borderBottom: "1px solid var(--app-border)" }}>
             <div>
-            <p className="text-xs font-medium mb-0.5" style={{ color: "#4B5B73" }}>{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</p>
+            <p className="text-xs font-medium mb-0.5" style={{ color: "var(--app-text-muted)" }}>{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</p>
             <h2 className="text-lg font-bold text-white" style={{ fontFamily: "Outfit, sans-serif" }}>
                 {greeting}, <span className="gradient-text">{firstName}</span>
             </h2>

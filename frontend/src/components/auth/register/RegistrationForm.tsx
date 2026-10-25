@@ -70,7 +70,7 @@ export function RegistrationForm() {
             </Link>
             <div
                 className="w-full max-w-sm rounded-2xl p-8 animate-fade-in-up"
-                style={{ background: "#1E2638", border: "1px solid #2A354D", boxShadow: "0 24px 64px rgba(0,0,0,0.5)" }}
+                style={{ background: "var(--app-surface)", border: "1px solid var(--app-border)", boxShadow: "0 24px 64px rgba(0,0,0,0.5)" }}
             >
                 <h1 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: "Outfit, sans-serif" }}>
                     Start your journey
@@ -91,12 +91,12 @@ export function RegistrationForm() {
                         placeholder="Alex Morgan"
                         className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-text-muted transition-all duration-200"
                         style={{
-                        background: "#0B0F17",
-                        border: "1px solid #2A354D",
+                        background: "var(--app-bg)",
+                        border: "1px solid var(--app-border)",
                         outline: "none",
                         }}
                         onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
-                        onBlur={(e) => (e.target.style.borderColor = "#2A354D")}
+                        onBlur={(e) => (e.target.style.borderColor = "var(--app-border)")}
                     />
                     </div>
                     <div>
@@ -110,9 +110,9 @@ export function RegistrationForm() {
                         onChange={handleChange}
                         placeholder="you@example.com"
                         className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-text-muted transition-all duration-200"
-                        style={{ background: "#0B0F17", border: "1px solid #2A354D" }}
+                        style={{ background: "var(--app-bg)", border: "1px solid var(--app-border)" }}
                         onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
-                        onBlur={(e) => (e.target.style.borderColor = "#2A354D")}
+                        onBlur={(e) => (e.target.style.borderColor = "var(--app-border)")}
                         />
                     </div>
 
@@ -128,14 +128,14 @@ export function RegistrationForm() {
                             onChange={handleChange}
                             placeholder="••••••••"
                             className="w-full rounded-xl py-3 pl-4 pr-11 text-sm text-white placeholder-text-muted transition-all duration-200"
-                            style={{ background: "#0B0F17", border: "1px solid #2A354D", outline: "none" }}
+                            style={{ background: "var(--app-bg)", border: "1px solid var(--app-border)", outline: "none" }}
                             onFocus={(e) => {
                                 setPasswordFocused(true);
                                 e.target.style.borderColor = "#6366F1";
                             }}
                             onBlur={(e) => {
                                 setPasswordFocused(false);
-                                e.target.style.borderColor = "#2A354D";
+                                e.target.style.borderColor = "var(--app-border)";
                             }}
                             />
                             <button
@@ -214,7 +214,7 @@ export function RegistrationForm() {
                     <span className="text-xs font-medium" style={{ color: "#10B981" }}>256-bit encrypted &amp; private</span>
                 </div>
 
-                <p className="text-center text-xs mt-5" style={{ color: "#4B5B73" }}>
+                <p className="text-center text-xs mt-5" style={{ color: "var(--app-text-muted)" }}>
                     Already have an account?{" "}
                     <Link href="/login" className="font-medium transition-colors hover:opacity-80" style={{ color: "#818CF8" }}>
                         Sign in

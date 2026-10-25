@@ -42,14 +42,14 @@ export function Entries({title, entries, search, limit, showViewAll, onViewAll, 
                       <div
                         key={i}
                         className="rounded-2xl p-5 animate-pulse"
-                        style={{ background: "#1E2638", border: "1px solid #2A354D" }}
+                        style={{ background: "var(--app-surface)", border: "1px solid var(--app-border)" }}
                       >
-                        <div className="h-4 rounded-md mb-3 w-2/3" style={{ background: "#2A354D" }} />
-                        <div className="h-3 rounded-md mb-2 w-full" style={{ background: "#252F44" }} />
-                        <div className="h-3 rounded-md w-4/5" style={{ background: "#252F44" }} />
+                        <div className="h-4 rounded-md mb-3 w-2/3" style={{ background: "var(--app-border)" }} />
+                        <div className="h-3 rounded-md mb-2 w-full" style={{ background: "var(--app-surface-high)" }} />
+                        <div className="h-3 rounded-md w-4/5" style={{ background: "var(--app-surface-high)" }} />
                       </div>
                     ))}
-                    <p className="text-center text-xs pt-2" style={{ color: "#4B5B73" }}>
+                    <p className="text-center text-xs pt-2" style={{ color: "var(--app-text-muted)" }}>
                       Loading your entries…
                     </p>
                   </div>
@@ -64,7 +64,7 @@ export function Entries({title, entries, search, limit, showViewAll, onViewAll, 
                       <EntryCard key={entry.id} entry={entry} />
                   ))}
                   {entries.length === 0 && (
-                    <div className="text-center py-12" style={{ color: "#4B5B73" }}>
+                    <div className="text-center py-12" style={{ color: "var(--app-text-muted)" }}>
                       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="mx-auto mb-3 opacity-40">
                         <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" />
                         <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

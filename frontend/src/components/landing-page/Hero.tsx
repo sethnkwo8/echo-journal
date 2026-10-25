@@ -60,19 +60,19 @@ export function Hero() {
           </Link>
           <Link href="/login"
             className="px-8 py-4 rounded-2xl text-base font-semibold transition-all hover:bg-surface"
-            style={{ color: "#94A3B8", border: "1px solid #2A354D" }}>
+            style={{ color: "#94A3B8", border: "1px solid var(--app-border)" }}>
             Sign in to Echo
           </Link>
         </div>
 
         {/* Live Demo Card
         <div className="w-full max-w-sm animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
-          <p className="text-xs font-medium mb-3 uppercase tracking-widest" style={{ color: "#4B5B73" }}>Try it right now</p>
+          <p className="text-xs font-medium mb-3 uppercase tracking-widest" style={{ color: "var(--app-text-muted)" }}>Try it right now</p>
           <div
             className="rounded-2xl p-6 transition-all duration-500"
             style={{
-              background: demoActive ? "linear-gradient(135deg, rgba(99,102,241,0.18), rgba(139,92,246,0.1))" : "#1E2638",
-              border: demoActive ? "1px solid rgba(99,102,241,0.4)" : "1px solid #2A354D",
+              background: demoActive ? "linear-gradient(135deg, rgba(99,102,241,0.18), rgba(139,92,246,0.1))" : "var(--app-surface)",
+              border: demoActive ? "1px solid rgba(99,102,241,0.4)" : "1px solid var(--app-border)",
               boxShadow: demoActive ? "0 8px 48px rgba(99,102,241,0.25)" : "0 4px 24px rgba(0,0,0,0.3)",
             }}
           >
@@ -82,10 +82,10 @@ export function Hero() {
               {demoActive ? (
                 <div className="text-center">
                   <p className="text-2xl font-bold tabular-nums" style={{ color: "#818CF8", fontFamily: "Outfit, sans-serif" }}>{fmt(demoTime)}</p>
-                  <p className="text-xs mt-1" style={{ color: "#4B5B73" }}>Tap to stop — we'll transcribe instantly</p>
+                  <p className="text-xs mt-1" style={{ color: "var(--app-text-muted)" }}>Tap to stop — we'll transcribe instantly</p>
                 </div>
               ) : (
-                <p className="text-sm text-center" style={{ color: "#4B5B73" }}>
+                <p className="text-sm text-center" style={{ color: "var(--app-text-muted)" }}>
                   {demoTime > 0 ? "✨ Entry ready to save" : "Tap the mic to demo Echo"}
                 </p>
               )}
@@ -102,7 +102,7 @@ export function Hero() {
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-2">
               <span className="text-base">{item.icon}</span>
-              <span className="text-xs font-medium" style={{ color: "#4B5B73" }}>{item.label}</span>
+              <span className="text-xs font-medium" style={{ color: "var(--app-text-muted)" }}>{item.label}</span>
             </div>
           ))}
         </div>

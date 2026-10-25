@@ -85,7 +85,7 @@ export function EntryDetailContent({entry}: EntryDetailContentProps) {
                 <ErrorMessage message={deleteMutation.error.message}/>
             )}
             {/* Date */}
-            <p className="text-sm" style={{ color: "#4B5B73" }}>{formatJournalEntryDate(entry.created_at)}</p>
+            <p className="text-sm" style={{ color: "var(--app-text-muted)" }}>{formatJournalEntryDate(entry.created_at)}</p>
     
             {/* Audio Player */}
             {/* <AudioPlayer /> */}

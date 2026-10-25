@@ -8,7 +8,7 @@ import { Navbar } from "./Navbar";
 
 export function LandingPage() {
     return (
-        <div className="min-h-screen overflow-x-hidden" style={{ background: "#0B0F17" }}>
+        <div className="min-h-screen overflow-x-hidden" style={{ background: "var(--app-bg)" }}>
             <Navbar />
             <Hero />
             <Features />

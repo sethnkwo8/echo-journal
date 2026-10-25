@@ -120,3 +120,24 @@ export async function deleteJournalEntry(entry_id: string) {
 
     return message;
 }
+
+export async function deleteJournalEntries() {
+    const res = await authenticatedFetch(`${apiURL}/journals/`, {
+        method: "DELETE",
+    });
+
+    if (!res.ok) {
+        let errorData: unknown
+        try{
+            errorData = await res.json();
+        }
+        catch{
+            throw new Error("Failed to delete all journal entries")
+        }
+        throw new Error(parseApiError(errorData as FastApiValidationError, "Failed to delete all journal entries"))
+    };
+
+    const message: string = "All Journal Entries successfully deleted";
+
+    return message;
+}

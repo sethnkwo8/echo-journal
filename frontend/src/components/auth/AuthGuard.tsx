@@ -19,7 +19,7 @@ function SessionRetryScreen({
   return (
     <div
       className="flex min-h-screen flex-col items-center justify-center gap-4 px-6"
-      style={{ background: "#0B0F17" }}
+      style={{ background: "var(--app-bg)" }}
     >
       <p className="text-sm text-center max-w-sm" style={{ color: "#94A3B8" }}>
         {message}
@@ -82,7 +82,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     return (
       <div
         className="flex min-h-screen items-center justify-center"
-        style={{ background: "#0B0F17" }}
+        style={{ background: "var(--app-bg)" }}
       >
         <p className="text-sm" style={{ color: "#94A3B8" }}>Loading...</p>
       </div>
@@ -107,7 +107,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     return (
       <div
         className="flex min-h-screen items-center justify-center"
-        style={{ background: "#0B0F17" }}
+        style={{ background: "var(--app-bg)" }}
       >
         <p className="text-sm" style={{ color: "#94A3B8" }}>Loading...</p>
       </div>
@@ -128,7 +128,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     return (
       <div
         className="flex min-h-screen items-center justify-center"
-        style={{ background: "#0B0F17" }}
+        style={{ background: "var(--app-bg)" }}
       >
         <p className="text-sm" style={{ color: "#94A3B8" }}>Loading...</p>
       </div>

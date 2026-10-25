@@ -63,7 +63,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("echo-theme");if(t==="midnight")document.documentElement.dataset.theme="midnight";}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body>
         <Providers>
           {children}

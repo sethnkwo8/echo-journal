@@ -24,7 +24,7 @@ export function LoadingScreen({ onDone }: { onDone: () => void }) {
       <div
         className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-10"
         style={{
-          background: "#0B0F17",
+          background: "var(--app-bg)",
           opacity: exiting ? 0 : 1,
           transition: "opacity 0.5s ease",
           pointerEvents: exiting ? "none" : "auto",
@@ -78,13 +78,13 @@ export function LoadingScreen({ onDone }: { onDone: () => void }) {
           </span>
   
           <p className="text-sm font-medium h-5 transition-all duration-300"
-            style={{ color: "#4B5B73", animation: "wordmark-in 0.4s ease 0.5s both" }}>
+            style={{ color: "var(--app-text-muted)", animation: "wordmark-in 0.4s ease 0.5s both" }}>
             {LOAD_STEPS[step]}
           </p>
         </div>
   
         {/* Progress bar */}
-        <div className="w-48 h-0.5 rounded-full overflow-hidden" style={{ background: "#1E2638" }}>
+        <div className="w-48 h-0.5 rounded-full overflow-hidden" style={{ background: "var(--app-surface)" }}>
           <div
             className="h-full rounded-full"
             style={{

@@ -15,10 +15,10 @@ export function StatsRow({entries}: {entries: JournalEntry[]}) {
           { label: "Words", value: getWordCountValue(entries), sub: "written" },
         ].map((stat) => (
           <div key={stat.label} className="rounded-xl p-4 text-center"
-            style={{ background: "#1E2638", border: "1px solid #2A354D" }}>
+            style={{ background: "var(--app-surface)", border: "1px solid var(--app-border)" }}>
             <p className="text-xl font-bold text-white" style={{ fontFamily: "Outfit, sans-serif" }}>{stat.value}</p>
             <p className="text-xs font-medium text-white mt-0.5">{stat.label}</p>
-            <p className="text-xs mt-0.5" style={{ color: "#4B5B73" }}>{stat.sub}</p>
+            <p className="text-xs mt-0.5" style={{ color: "var(--app-text-muted)" }}>{stat.sub}</p>
           </div>
         ))}
       </div>

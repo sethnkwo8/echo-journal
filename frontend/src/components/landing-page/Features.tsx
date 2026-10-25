@@ -3,7 +3,7 @@ import { FEATURES } from "@/lib/landing-page/features"
 
 export function Features() {
   return (
-      <section id="features" className="px-6 py-24" style={{ borderTop: "1px solid #1E2638" }}>
+      <section id="features" className="px-6 py-24" style={{ borderTop: "1px solid var(--app-border)" }}>
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#6366F1" }}>What Echo does</p>
@@ -18,8 +18,8 @@ export function Features() {
               key={f.title}
               className="rounded-2xl p-7 group transition-all duration-300 hover:scale-[1.01]"
               style={{
-                background: "#1E2638",
-                border: "1px solid #2A354D",
+                background: "var(--app-surface)",
+                border: "1px solid var(--app-border)",
                 boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
                 animationDelay: `${i * 0.08}s`,
               }}

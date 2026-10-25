@@ -22,8 +22,8 @@ export function TopBar({onBack, title, onChange, handleSave, handleDelete, saved
 
     return (
         <header className="sticky top-0 z-30 px-5 py-4 flex items-center gap-3"
-            style={{ background: "rgba(11,15,23,0.92)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(42,53,77,0.5)" }}>
-            <button onClick={onBack} className="p-2 rounded-xl transition-colors hover:bg-[#1E2638]" style={{ color: "#94A3B8" }}>
+            style={{ background: "var(--app-nav-bg)", backdropFilter: "blur(20px)", borderBottom: "1px solid var(--app-border)" }}>
+            <button onClick={onBack} className="p-2 rounded-xl transition-colors hover:bg-[var(--app-surface)]" style={{ color: "#94A3B8" }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -48,7 +48,7 @@ export function TopBar({onBack, title, onChange, handleSave, handleDelete, saved
             {saveMessage}
             </button>
             <button
-             className="p-2 rounded-xl transition-colors hover:bg-red-900/20 disabled:opacity-30" style={{ color: "#4B5B73" }}
+             className="p-2 rounded-xl transition-colors hover:bg-red-900/20 disabled:opacity-30" style={{ color: "var(--app-text-muted)" }}
              onClick={handleDelete}
              disabled={deleteDisabled}
             >

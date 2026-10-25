@@ -2,10 +2,10 @@
 @import 'tailwindcss';
 
 @theme inline {
-  --color-bg-base: #0B0F17;
-  --color-surface: #1E2638;
-  --color-surface-high: #252F44;
-  --color-border: #2A354D;
+  --color-bg-base: var(--app-bg);
+  --color-surface: var(--app-surface);
+  --color-surface-high: var(--app-surface-high);
+  --color-border: var(--app-border);
   --color-border-subtle: #1E2A3D;
   --color-primary: #6366F1;
   --color-primary-light: #818CF8;
@@ -14,9 +14,36 @@
   --color-emerald-glow: rgba(16, 185, 129, 0.2);
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #94A3B8;
-  --color-text-muted: #4B5B73;
+  --color-text-muted: var(--app-text-muted);
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Outfit', system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+  --app-bg: #0B0F17;
+  --app-bg-alt: #0D1220;
+  --app-input: #121824;
+  --app-surface: #1E2638;
+  --app-surface-high: #252F44;
+  --app-border: #2A354D;
+  --app-text-muted: #4B5B73;
+  --app-nav-bg-soft: rgba(11, 15, 23, 0.85);
+  --app-nav-bg: rgba(11, 15, 23, 0.92);
+  --app-nav-bg-strong: rgba(11, 15, 23, 0.95);
+}
+
+:root[data-theme="midnight"] {
+  --app-bg: #05070B;
+  --app-bg-alt: #080B12;
+  --app-input: #090D15;
+  --app-surface: #111827;
+  --app-surface-high: #182235;
+  --app-border: #25304A;
+  --app-text-muted: #526079;
+  --app-nav-bg-soft: rgba(5, 7, 11, 0.85);
+  --app-nav-bg: rgba(5, 7, 11, 0.92);
+  --app-nav-bg-strong: rgba(5, 7, 11, 0.95);
 }
 
 * {
@@ -30,11 +57,12 @@ html, body, #root {
 }
 
 body {
-  background-color: #0B0F17;
+  background-color: var(--app-bg);
   color: #FFFFFF;
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 200ms ease;
 }
 
 ::-webkit-scrollbar {
@@ -45,7 +73,7 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A354D;
+  background: var(--app-border);
   border-radius: 4px;
   opacity: 0;
   transition: opacity 0.2s;
@@ -75,6 +103,37 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes logo-pop {
+  0%   { opacity: 0; transform: scale(0.6); }
+  60%  { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes logo-glow-pulse {
+  0%, 100% { box-shadow: 0 0 32px rgba(99,102,241,0.5), 0 0 64px rgba(139,92,246,0.25); }
+  50%       { box-shadow: 0 0 56px rgba(99,102,241,0.8), 0 0 96px rgba(139,92,246,0.45); }
+}
+
+@keyframes wordmark-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes ripple-out {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -101,9 +160,9 @@ input:focus, textarea:focus {
 }
 
 .glass-card {
-  background: rgba(30, 38, 56, 0.8);
+  background: color-mix(in srgb, var(--app-surface) 80%, transparent);
   backdrop-filter: blur(12px);
-  border: 1px solid #2A354D;
+  border: 1px solid var(--app-border);
 }
 
 .gradient-text {

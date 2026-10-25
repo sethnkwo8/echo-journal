@@ -2,7 +2,7 @@
 
 export function AudioPlayer() {
     return (
-        <div className="rounded-2xl p-5" style={{ background: "#1E2638", border: "1px solid #2A354D" }}>
+        <div className="rounded-2xl p-5" style={{ background: "var(--app-surface)", border: "1px solid var(--app-border)" }}>
             <div className="flex items-center justify-between mb-5">
                 {/* <WaveformBars active={playing} bars={24} /> */}
                 <div className="flex items-center gap-2 ml-4">
@@ -13,7 +13,7 @@ export function AudioPlayer() {
                         className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
                         style={{
                         // background: speed === s ? "rgba(99,102,241,0.2)" : "transparent",
-                        // color: speed === s ? "#818CF8" : "#4B5B73",
+                        // color: speed === s ? "#818CF8" : "var(--app-text-muted)",
                         // border: speed === s ? "1px solid rgba(99,102,241,0.3)" : "1px solid transparent",
                         }}
                     >
@@ -26,7 +26,7 @@ export function AudioPlayer() {
             {/* Progress bar */}
             <div
                 className="w-full h-1.5 rounded-full mb-3 cursor-pointer"
-                style={{ background: "#0B0F17" }}
+                style={{ background: "var(--app-bg)" }}
                 onClick={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     // setProgress(((e.clientX - rect.left) / rect.width) * 100);

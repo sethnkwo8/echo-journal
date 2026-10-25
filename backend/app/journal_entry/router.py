@@ -3,7 +3,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, status
 from sqlmodel import Session
 from .schema import JournalEntryResponse, JournalEntryCreate, JournalEntryUpdate
-from .service import create_entry, get_user_entries, get_entry_by_id, update_entry, delete_entry
+from .service import create_entry, get_user_entries, get_entry_by_id, update_entry, delete_entry, delete_all_entries
 from app.database import get_session
 from app.auth.dependencies import get_current_user
 from app.models.user import User
@@ -81,6 +81,16 @@ def update_journal_entry(
         created_at=entry.created_at,
         updated_at=entry.updated_at
     )
+
+# DELETE route to delete all entries
+@router.delete(path="/", status_code=status.HTTP_204_NO_CONTENT)
+def delete_journal_entries(
+    user: User = Depends(get_current_user),
+    db_session: Session = Depends(get_session)
+):
+    delete_all_entries(current_user=user, db_session=db_session)
+
+    return None
 
 # DELETE route to delete an entry
 @router.delete(path="/{entry_id}", status_code=status.HTTP_204_NO_CONTENT)
