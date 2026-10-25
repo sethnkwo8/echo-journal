@@ -6,7 +6,7 @@ import { BottomNav } from "@/components/layout/BottomNav";
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
     return (
         <AuthGuard>
-            <div className="min-h-screen" style={{ background: "#0B0F17" }}>
+            <div className="min-h-screen" style={{ background: "var(--app-bg)" }}>
                 <Sidebar />
                 <BottomNav />
                 <main className="flex flex-col md:ml-60 min-w-0 min-h-screen">

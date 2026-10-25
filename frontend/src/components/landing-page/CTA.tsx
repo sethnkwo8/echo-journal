@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export function CTA() {
     return (
-        <section className="px-6 py-28 relative overflow-hidden" style={{ borderTop: "1px solid #1E2638" }}>
+        <section className="px-6 py-28 relative overflow-hidden" style={{ borderTop: "1px solid var(--app-border)" }}>
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-175 h-75 rounded-full opacity-15"
                 style={{ background: "radial-gradient(ellipse, #6366F1 0%, transparent 70%)", filter: "blur(60px)" }} />
@@ -20,7 +20,7 @@ export function CTA() {
                 style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 8px 40px rgba(99,102,241,0.45)" }}>
                 Create your free account →
             </Link>
-            <p className="text-xs mt-5" style={{ color: "#4B5B73" }}>No credit card required</p>
+            <p className="text-xs mt-5" style={{ color: "var(--app-text-muted)" }}>No credit card required</p>
             </div>
       </section>
     )

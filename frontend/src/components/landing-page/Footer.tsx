@@ -2,7 +2,7 @@
 
 export function Footer() {
     return (
-        <footer className="px-6 py-10" style={{ borderTop: "1px solid #1E2638" }}>
+        <footer className="px-6 py-10" style={{ borderTop: "1px solid var(--app-border)" }}>
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center"
@@ -16,10 +16,10 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-6">
             {["Privacy", "Terms", "Security", "Blog"].map((item) => (
-              <a key={item} href="#" className="text-xs transition-colors hover:text-white" style={{ color: "#4B5B73" }}>{item}</a>
+              <a key={item} href="#" className="text-xs transition-colors hover:text-white" style={{ color: "var(--app-text-muted)" }}>{item}</a>
             ))}
           </div>
-          <p className="text-xs" style={{ color: "#4B5B73" }}>© 2026 Echo. Made with care.</p>
+          <p className="text-xs" style={{ color: "var(--app-text-muted)" }}>© 2026 Echo. Made with care.</p>
         </div>
       </footer>
     )

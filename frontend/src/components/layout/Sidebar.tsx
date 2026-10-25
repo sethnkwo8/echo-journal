@@ -78,7 +78,7 @@ export function Sidebar() {
     return (
       <aside
         className="hidden md:flex flex-col w-60 fixed left-0 top-0 bottom-0 z-40 py-6 px-4"
-        style={{ background: "#0D1220", borderRight: "1px solid #1E2638" }}
+        style={{ background: "var(--app-bg-alt)", borderRight: "1px solid var(--app-border)" }}
       >
         <div className="flex items-center gap-2 px-2 mb-10">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center"
@@ -104,7 +104,7 @@ export function Sidebar() {
                   "hover:translate-x-0.5 [&>svg]:transition-transform [&>svg]:duration-200 group-hover:[&>svg]:scale-110",
                   isActive
                     ? "text-[#818CF8] bg-[rgba(99,102,241,0.12)] border-[rgba(99,102,241,0.2)] hover:bg-[rgba(99,102,241,0.2)] hover:shadow-[inset_0_0_0_1px_rgba(99,102,241,0.35)]"
-                    : "text-[#4B5B73] hover:bg-[#1E2638] hover:text-[#94A3B8] hover:border-[#2A3548]",
+                    : "text-[var(--app-text-muted)] hover:bg-[var(--app-surface)] hover:text-[#94A3B8] hover:border-[var(--app-border)]",
                 ].join(" ")}
               >
                 {tab.icon}
@@ -114,7 +114,7 @@ export function Sidebar() {
           })}
         </nav>
   
-        <div className="pt-4 mt-4 space-y-2" style={{ borderTop: "1px solid #1E2638" }}>
+        <div className="pt-4 mt-4 space-y-2" style={{ borderTop: "1px solid var(--app-border)" }}>
           <button
             onClick={() => router.push(profilePath)}
             className={[
@@ -123,7 +123,7 @@ export function Sidebar() {
               "hover:translate-x-0.5",
               pathname === profilePath
                 ? "hover:bg-[rgba(99,102,241,0.2)] hover:shadow-[inset_0_0_0_1px_rgba(99,102,241,0.35)]"
-                : "hover:bg-[#1E2638]",
+                : "hover:bg-[var(--app-surface)]",
             ].join(" ")}
             style={{
               background: pathname === profilePath ? "rgba(99,102,241,0.12)" : "transparent",

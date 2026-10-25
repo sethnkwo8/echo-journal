@@ -10,10 +10,10 @@ interface SearchBarProps {
 
 export function SearchBar({search, setSearch, month, setMonth, months}: SearchBarProps) {
     return (
-        <div className="rounded-2xl p-4 mb-6" style={{ background: "#1E2638", border: "1px solid #2A354D" }}>
+        <div className="rounded-2xl p-4 mb-6" style={{ background: "var(--app-surface)", border: "1px solid var(--app-border)" }}>
           <div className="flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2" width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ color: "#4B5B73" }}>
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2" width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ color: "var(--app-text-muted)" }}>
                     <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" />
                     <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
@@ -22,10 +22,10 @@ export function SearchBar({search, setSearch, month, setMonth, months}: SearchBa
                     value={search}
                     onChange={(event) => setSearch(event.target.value)}
                     placeholder="Search text, tags, or feelings..."
-                    className="w-full pl-11 pr-4 py-3 rounded-xl text-sm text-white placeholder-[#4B5B73]"
-                    style={{ background: "#121824", border: "1px solid #2A354D" }}
+                    className="w-full pl-11 pr-4 py-3 rounded-xl text-sm text-white placeholder-[var(--app-text-muted)]"
+                    style={{ background: "var(--app-input)", border: "1px solid var(--app-border)" }}
                     onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
-                    onBlur={(e) => (e.target.style.borderColor = "#2A354D")}
+                    onBlur={(e) => (e.target.style.borderColor = "var(--app-border)")}
                 />
                 </div>
                 <div className="relative sm:w-48">
@@ -38,15 +38,15 @@ export function SearchBar({search, setSearch, month, setMonth, months}: SearchBa
                     value={month}
                     onChange={(event) => setMonth(event.target.value)}
                     onFocus={(e) => (e.target.style.borderColor = "#6366F1")}
-                    onBlur={(e) => (e.target.style.borderColor = "#2A354D")}
+                    onBlur={(e) => (e.target.style.borderColor = "var(--app-border)")}
                     className="w-full appearance-none pl-10 pr-9 py-3 rounded-xl text-sm text-white cursor-pointer outline-0"
-                    style={{ background: "#121824", border: "1px solid #2A354D" }}
+                    style={{ background: "var(--app-input)", border: "1px solid var(--app-border)" }}
                     aria-label="Filter by month"
                 >
                     <option value="All months">All months</option>
                     {months.map((entryMonth) => <option key={entryMonth}>{entryMonth}</option>)}
                 </select>
-                <svg className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ color: "#4B5B73" }}>
+                <svg className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ color: "var(--app-text-muted)" }}>
                     <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 </div>

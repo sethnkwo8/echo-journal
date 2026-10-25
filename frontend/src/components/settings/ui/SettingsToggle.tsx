@@ -10,7 +10,7 @@ export function SettingsToggle({value, onChange}: SettingsToggleProps) {
             onClick={() => onChange(!value)}
             className="relative flex-shrink-0 w-10 h-5.5 rounded-full transition-all duration-200"
             style={{
-            background: value ? "linear-gradient(135deg, #6366F1, #8B5CF6)" : "#2A354D",
+            background: value ? "linear-gradient(135deg, #6366F1, #8B5CF6)" : "var(--app-border)",
             width: 40, height: 22,
             boxShadow: value ? "0 0 12px rgba(99,102,241,0.35)" : "none",
             }}

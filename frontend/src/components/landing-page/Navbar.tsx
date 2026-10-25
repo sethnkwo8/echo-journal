@@ -5,7 +5,7 @@ import Link from "next/link"
 export function Navbar() {
     return (
         <nav className="sticky top-0 z-50 px-6 py-4 flex items-center justify-between"
-        style={{ background: "rgba(11,15,23,0.85)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(42,53,77,0.4)" }}>
+        style={{ background: "var(--app-nav-bg-soft)", backdropFilter: "blur(20px)", borderBottom: "1px solid var(--app-border)" }}>
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center"
             style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 4px 14px rgba(99,102,241,0.4)" }}>

@@ -60,9 +60,9 @@ export function BottomNav() {
       <nav
         className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-2 md:hidden"
         style={{
-          background: "rgba(11, 15, 23, 0.95)",
+          background: "var(--app-nav-bg-strong)",
           backdropFilter: "blur(20px)",
-          borderTop: "1px solid #1E2638",
+          borderTop: "1px solid var(--app-border)",
         }}
       >
         {tabs.map((tab) => {
@@ -74,17 +74,17 @@ export function BottomNav() {
                     onClick={() => router.push(tab.page)}
                     className="flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-all duration-200"
                     style={{
-                    color: isActive ? "#818CF8" : "#4B5B73",
+                    color: isActive ? "#818CF8" : "var(--app-text-muted)",
                     transform: isActive ? "scale(1.08)" : "scale(1)",
                     }}
                 >
                     {tab.id === "record" ? (
                     <div className="w-10 h-10 rounded-full flex items-center justify-center"
                         style={{
-                        background: isActive ? "linear-gradient(135deg, #6366F1, #8B5CF6)" : "#1E2638",
-                        border: isActive ? "none" : "1px solid #2A354D",
+                        background: isActive ? "linear-gradient(135deg, #6366F1, #8B5CF6)" : "var(--app-surface)",
+                        border: isActive ? "none" : "1px solid var(--app-border)",
                         boxShadow: isActive ? "0 4px 16px rgba(99,102,241,0.4)" : "none",
-                        color: isActive ? "white" : "#4B5B73",
+                        color: isActive ? "white" : "var(--app-text-muted)",
                         }}>
                         {tab.icon}
                     </div>
