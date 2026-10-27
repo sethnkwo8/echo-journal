@@ -3,8 +3,8 @@ from fastapi import APIRouter, Cookie, Response, Depends, HTTPException, status
 
 from app.models.user import User
 from .exceptions import UnauthorizedError, UserAlreadyExistsError, InvalidCredentialsError
-from .schema import UserLoginRequest, UserRegisterResponse, UserRegisterRequest, Token
-from .service import register_user, authenticate_user, create_access_token, create_refresh_token, refresh_access_token
+from .schema import UserLoginRequest, UserRegisterResponse, UserRegisterRequest, Token, UserUpdateRequest, UserChangePassword
+from .service import register_user, authenticate_user, create_access_token, create_refresh_token, refresh_access_token, update_user, change_password
 from .dependencies import get_current_user
 from sqlmodel import Session
 from app.database import get_session
@@ -106,3 +106,25 @@ def logout(response: Response):
 @router.get("/me", response_model=UserRegisterResponse, status_code=status.HTTP_200_OK)
 def me(user: User = Depends(get_current_user)):
     return user
+
+# PATCH route to update user details
+@router.patch("/me", response_model=UserRegisterResponse, status_code=status.HTTP_200_OK)
+def update_me(
+    payload: UserUpdateRequest,
+    user: User = Depends(get_current_user), 
+    db_session: Session = Depends(get_session)
+):
+    updated_user = update_user(payload=payload, current_user=user, db_session=db_session)
+
+    return updated_user
+
+# POST route for changing user password
+@router.post("/change-password", status_code=status.HTTP_200_OK)
+def change_user_password(
+    payload: UserChangePassword,
+    user: User = Depends(get_current_user),
+    db_session: Session = Depends(get_session)
+):
+    change_password(payload=payload, current_user=user, db_session=db_session)
+
+    return {"message" : "Password has been updated"}

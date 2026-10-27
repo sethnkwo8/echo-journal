@@ -5,8 +5,8 @@ import jwt
 from uuid import UUID
 from datetime import datetime, timedelta, timezone
 from sqlmodel import select, Session
-from .schema import UserRegisterRequest, UserLoginRequest, TokenData
-from .exceptions import UserAlreadyExistsError, InvalidCredentialsError, UnauthorizedError
+from .schema import UserRegisterRequest, UserLoginRequest, TokenData, UserUpdateRequest, UserChangePassword
+from .exceptions import UserAlreadyExistsError, InvalidCredentialsError, InvalidCurrentPasswordError, UnauthorizedError, SameCurrentNewPasswordError
 from app.models.user import User
 from app.utils.security import hash_password, verify_password
 from fastapi.security import OAuth2PasswordBearer
@@ -107,6 +107,41 @@ def refresh_access_token(refresh_token: str, db_session: Session) -> str:
 
     # Issue a new access token
     return create_access_token(data={"sub": str(user.id)})
+
+# Function to update user data
+def update_user(payload: UserUpdateRequest, current_user: User, db_session: Session):
+    # Convert update data to a dict
+    update_dict = payload.model_dump(exclude_unset=True, exclude_none=True)
+
+    if not update_dict:
+        return current_user
+
+    # Update user attributes
+    for key, value in update_dict.items():
+        setattr(current_user, key, value)
+
+    db_session.commit()
+    db_session.refresh(current_user)
+
+    return current_user
+
+# Function to change user password
+def change_password(payload: UserChangePassword, current_user: User, db_session: Session):
+    current_password = payload.current_password.get_secret_value()
+    new_password = payload.new_password.get_secret_value()
+
+    if not verify_password(current_password, current_user.password_hash):
+        raise InvalidCurrentPasswordError()
+
+    if current_password == new_password:
+        raise SameCurrentNewPasswordError()
+
+    current_user.password_hash = hash_password(new_password)
+
+    db_session.commit()
+    db_session.refresh(current_user)
+
+    return None
 
 # TODO request_password_reset
 

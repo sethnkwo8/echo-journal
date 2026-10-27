@@ -1,5 +1,5 @@
 // frontend/src/lib/api/auth.ts
-import { LoginFormType, RegisterForm, Token, AuthUser } from "@/types/auth";
+import { LoginFormType, RegisterForm, Token, AuthUser, UserUpdate, UserChangePassword } from "@/types/auth";
 import { parseApiError, type FastApiValidationError } from "./parseApiError";
 import { authenticatedFetch } from "./authenticatedFetch";
 import { SessionExpiredError } from "../auth/errors";
@@ -124,4 +124,54 @@ export async function logoutUser() {
     }
 
     return await res.json()
+}
+
+// PATCH fetch call to update user data
+export async function updateUserData(data: UserUpdate) {
+    const res = await authenticatedFetch(`${apiURL}/auth/me`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+
+    if (!res.ok) {
+        let errorData: unknown
+        try{
+            errorData = await res.json();
+        }
+        catch{
+            throw new Error("Failed to update user details")
+        }
+        throw new Error(parseApiError(errorData as FastApiValidationError, "Failed to update user details"))
+    }
+
+    const user: AuthUser = await res.json()
+
+    return user
+}
+
+// POST fetch call to change user password
+export async function changeUserPassword(data:UserChangePassword) {
+    const res = await authenticatedFetch(`${apiURL}/auth/change-password`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+
+    if (!res.ok) {
+        let errorData: unknown
+        try{
+            errorData = await res.json();
+        }
+        catch{
+            throw new Error("Failed to change user password")
+        }
+        throw new Error(parseApiError(errorData as FastApiValidationError, "Failed to change user password"))
+    }
+
+    const message = await res.json()
 }

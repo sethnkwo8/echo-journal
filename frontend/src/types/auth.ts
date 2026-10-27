@@ -26,3 +26,14 @@ export interface AuthUser {
     email: string;
     created_at: string;    
 }
+
+// Interface for user update
+export interface UserUpdate {
+    name?: string;
+}
+
+// Interface for user change password
+export interface UserChangePassword {
+    current_password: string;
+    new_password: string;
+}
