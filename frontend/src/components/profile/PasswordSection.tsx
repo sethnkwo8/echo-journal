@@ -144,7 +144,7 @@ export function PasswordSection({
                     className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                     style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)" }}
                 >
-                    {isPending ? "Update password" : "Updating"}
+                    {isPending ? "Updating..." : "Update password"}
                 </button>
                 </div>
             </form>

@@ -1,17 +1,26 @@
 // frontend/src/components/profile/AvatarAndName.tsx
 
+import { AuthUser } from "@/types/auth";
+import { getNameInitials } from "@/utils/getNameInitials";
+
 interface AvatarAndNameProps {
-    name: string;
-    editing: boolean;
-    setName(value: string): void;
+  user: AuthUser
+  editing: boolean;
+  draftName: string;
+  setDraftName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function AvatarAndName({name, editing, setName}: AvatarAndNameProps) {
+export function AvatarAndName({user, editing, draftName, setDraftName}: AvatarAndNameProps) {
+    const displayName = editing ? draftName : user.name;
+    const initials = getNameInitials(displayName || user.name);
+
     return (
-        <div className="relative">
-            <div className="w-24 h-24 rounded-full flex items-center justify-center text-4xl font-bold text-white"
-              style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 8px 32px rgba(99,102,241,0.4)" }}>
-              {name.charAt(0)}
+        <div className="relative flex flex-col items-center gap-3">
+            <div
+              className={`w-24 h-24 rounded-full flex items-center justify-center font-bold text-white ${initials.length > 1 ? "text-2xl" : "text-4xl"}`}
+              style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 8px 32px rgba(99,102,241,0.4)" }}
+            >
+              {initials || "?"}
             </div>
             {editing && (
               <button className="absolute bottom-0 right-0 w-7 h-7 rounded-full flex items-center justify-center text-white"
@@ -25,16 +34,14 @@ export function AvatarAndName({name, editing, setName}: AvatarAndNameProps) {
 
             {editing ? (
                 <div className="w-full max-w-xs space-y-3">
-                    <input value={name} onChange={(e) => setName(e.target.value)}
+                    <input value={draftName} onChange={(e) => setDraftName(e.target.value)}
                         className="w-full text-center bg-transparent text-xl font-bold text-white focus:outline-none border-b pb-1"
                         style={{ borderColor: "#6366F1" }} />
                 </div>
             ) : (
-                <>
                 <div className="text-center">
-                    <h3 className="text-2xl font-bold text-white" style={{ fontFamily: "Outfit, sans-serif" }}>{name}</h3>
+                    <h3 className="text-2xl font-bold text-white" style={{ fontFamily: "Outfit, sans-serif" }}>{user.name}</h3>
                 </div>
-                </>
             )}
         </div>
     )

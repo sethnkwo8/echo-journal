@@ -2,8 +2,9 @@
 "use client"
 
 import { ProfileHeader } from "./ProfileHeader";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { SavedBar } from "./SavedBar";
+import { ErrorMessage } from "../new-entry/ErrorMessage";
 import { useMe } from "@/queries/auth/useMe";
 import { AvatarAndName } from "./AvatarAndName";
 import { AccountInfo } from "./AccountInfo";
@@ -28,7 +29,7 @@ export function ProfilePage() {
 
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
     const [editing, setEditing] = useState<boolean>(false);
-    const [name, setName] = useState<string|undefined>(user?.name);
+    const [draftName, setDraftName] = useState<string>("");
     const [saved, setSaved] = useState<boolean>(false);
     const [changingPassword, setChangingPassword] = useState<boolean>(false);
     const [currentPassword, setCurrentPassword] = useState<string>("");
@@ -36,10 +37,17 @@ export function ProfilePage() {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [passwordError, setPasswordError] = useState<string>("");
     const [passwordChanged, setPasswordChanged] = useState<boolean>(false);
+    const [saveError, setSaveError] = useState<string>("");
+
+    useEffect(() => {
+        if (!saved) return;
+        const timer = window.setTimeout(() => setSaved(false), 4000);
+        return () => window.clearTimeout(timer);
+    }, [saved]);
 
     if (!user) return null;
 
-    const email = user?.email;
+    const email = user.email;
     const entries = journalEntries.data ?? [];
     const totalEntries = entries.length;
     const streak = getUserStreak(entries);
@@ -98,18 +106,57 @@ export function ProfilePage() {
         )
     }
 
+    function onStartEdit() {
+        if (!user) return;
+
+        setDraftName(user.name);
+        setEditing(true);
+        setSaved(false);
+        setSaveError("");
+    }
+
+    function handleSave() {
+        if (!user) return;
+
+        updateMutation.reset();
+        setSaveError("");
+
+        const trimmed = draftName.trim();
+
+        if (trimmed === "") {
+            setSaveError("Name can't be empty");
+            return;
+        }
+
+        if (trimmed === user.name) {
+            setEditing(false);
+            return;
+        }
+
+        updateMutation.mutate(
+            { name: trimmed },
+            {
+                onSuccess: () => {
+                    setEditing(false);
+                    setSaved(true);
+                },
+                onError: (err) => setSaveError(err.message),
+            }
+        );
+    }
+
     return (
         <div className="flex-1 overflow-y-auto pb-24 md:pb-8 animate-fade-in-up">
             {/* Header */}
-            <ProfileHeader />
+            <ProfileHeader editing={editing} onStartEdit={onStartEdit} handleSave={handleSave} isPending={updateMutation.isPending}/>
             <div className="px-5 py-6 space-y-6 max-w-2xl mx-auto">
-                {/* Saved Bar */}
+                {saveError && <ErrorMessage message={saveError} />}
                 {saved && <SavedBar/>}
                 <div className="flex flex-col items-center gap-4 py-4">
                     {/* Avatar + Name */}
-                    <AvatarAndName />
+                    <AvatarAndName user={user} draftName={draftName} editing={editing} setDraftName={setDraftName}/>
                     {/* Account Info */}
-                    <div className="rounded-2xl overflow-hidden" style={{ background: "var(--app-surface)", border: "1px solid var(--app-border)" }}>
+                    <div className="w-full rounded-2xl overflow-hidden" style={{ background: "var(--app-surface)", border: "1px solid var(--app-border)" }}>
                     <AccountInfo email={email} date={memberSinceDate}/>
                     <PasswordSection 
                         setChangingPassword={setChangingPassword}
