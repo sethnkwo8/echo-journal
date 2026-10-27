@@ -8,6 +8,7 @@ import { useJournalEntries } from "@/queries/journals/useJournalEntries";
 import { useMe } from "@/queries/auth/useMe";
 import { SearchBar } from "./SearchBar";
 import { Entries } from "./Entries";
+import { isoToMonthYear } from "@/utils/isoToMonthYear";
 
 export function AllEntriesPage() {
     const router = useRouter();
@@ -20,12 +21,6 @@ export function AllEntriesPage() {
     const entries = journalEntries.data ?? [];
 
     const query = search.trim().toLowerCase();
-
-    function isoToMonthYear(iso: string) {
-        const date = new Date(iso);
-
-        return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }); 
-    }
 
     const sortIsoByLabel = new Map<string, string>();
 
