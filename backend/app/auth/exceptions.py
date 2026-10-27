@@ -25,6 +25,22 @@ class InvalidCredentialsError(AuthError):
             code="INVALID_CREDENTIALS"
         )
 
+class InvalidCurrentPasswordError(AuthError):
+    def __init__(self):
+        super().__init__(
+            message="Current password is invalid",
+            status_code=401,
+            code="INVALID_CURRENT_PASSWORD"
+        )
+
+class SameCurrentNewPasswordError(AuthError):
+    def __init__(self):
+        super().__init__(
+            message="Current password and new password cannot be the same",
+            status_code=400,
+            code="SAME_CURRENT_NEW_PASSWORD"
+        )
+
 class UnauthorizedError(AuthError):
     def __init__(self):
         super().__init__(
