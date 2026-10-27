@@ -1,8 +1,9 @@
 # backend/app/auth/schema.py
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, SecretStr, field_validator
+from typing import Optional
 from uuid import UUID
-import re
+from app.utils.validate_password import validate_password_complexity
 
 # Base shared attributes
 class EmailBase(BaseModel):
@@ -14,7 +15,14 @@ class EmailBase(BaseModel):
         return v.lower().strip()
 
 class UserBase(EmailBase):
-    name: str = Field(max_length=255)
+    name: str = Field(min_length=1, max_length=255)
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str) -> str:
+        if v is None:
+            return None
+        return v.strip()
 
 # Incoming payload for POST /auth/register
 class UserRegisterRequest(UserBase):
@@ -23,18 +31,7 @@ class UserRegisterRequest(UserBase):
     @field_validator('password', mode='after')
     @classmethod
     def password_complexity(cls, v: SecretStr) -> SecretStr:
-        password_val = v.get_secret_value()
-        
-        if not re.search(r'[A-Z]', password_val):
-            raise ValueError('Password must contain at least one uppercase letter')
-        if not re.search(r'[a-z]', password_val):
-            raise ValueError('Password must contain at least one lowercase letter')
-        if not re.search(r'\d', password_val):
-            raise ValueError('Password must contain at least one number')
-        if not re.search(r'[!@#$%^&*(),.?":{}|<>_-]', password_val):
-            raise ValueError('Password must contain at least one special character')
-            
-        return v # Return the original SecretStr object
+        return validate_password_complexity(v)
 
 
 # Outgoing response payload
@@ -53,6 +50,26 @@ class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
 
-
 class TokenData(BaseModel):
     user_id: UUID | None = None
+
+# Incoming payload for PATCH /auth/me
+class UserUpdateRequest(BaseModel):
+    name: Optional[str] = Field(default=None, min_length=1, max_length=255)
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return None
+        return v.strip()
+
+# Incoming payload for POST /auth/change-password
+class UserChangePassword(BaseModel):
+    current_password: SecretStr = Field(min_length=8, max_length=64)
+    new_password: SecretStr = Field(min_length=8, max_length=255)
+
+    @field_validator('new_password', mode='after')
+    @classmethod
+    def password_complexity(cls, v: SecretStr) -> SecretStr:
+        return validate_password_complexity(v)
