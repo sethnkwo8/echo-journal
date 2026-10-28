@@ -30,6 +30,7 @@ export function ProfilePage() {
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
     const [editing, setEditing] = useState<boolean>(false);
     const [draftName, setDraftName] = useState<string>("");
+    const [draftBio, setDraftBio] = useState<string>("");
     const [saved, setSaved] = useState<boolean>(false);
     const [changingPassword, setChangingPassword] = useState<boolean>(false);
     const [currentPassword, setCurrentPassword] = useState<string>("");
@@ -110,6 +111,7 @@ export function ProfilePage() {
         if (!user) return;
 
         setDraftName(user.name);
+        setDraftBio(user.bio ?? "");
         setEditing(true);
         setSaved(false);
         setSaveError("");
@@ -122,19 +124,30 @@ export function ProfilePage() {
         setSaveError("");
 
         const trimmed = draftName.trim();
+        const bioTrimmed = draftBio.trim();
 
         if (trimmed === "") {
             setSaveError("Name can't be empty");
             return;
         }
 
-        if (trimmed === user.name) {
+        if (bioTrimmed && bioTrimmed.length < 3) {
+            setSaveError("Bio must be at least 3 characters");
+            return;
+        }
+
+        if (bioTrimmed && bioTrimmed.length > 256) {
+            setSaveError("Bio must have less than 256 characters");
+            return;
+        }
+
+        if (trimmed === user.name && bioTrimmed === (user.bio ?? "")) {
             setEditing(false);
             return;
         }
 
         updateMutation.mutate(
-            { name: trimmed },
+            { name: trimmed, bio: bioTrimmed },
             {
                 onSuccess: () => {
                     setEditing(false);
@@ -154,7 +167,7 @@ export function ProfilePage() {
                 {saved && <SavedBar/>}
                 <div className="flex flex-col items-center gap-4 py-4">
                     {/* Avatar + Name */}
-                    <AvatarAndName user={user} draftName={draftName} editing={editing} setDraftName={setDraftName}/>
+                    <AvatarAndName user={user} draftName={draftName} draftBio={draftBio} editing={editing} setDraftName={setDraftName} setDraftBio={setDraftBio}/>
                     {/* Account Info */}
                     <div className="w-full rounded-2xl overflow-hidden" style={{ background: "var(--app-surface)", border: "1px solid var(--app-border)" }}>
                     <AccountInfo email={email} date={memberSinceDate}/>

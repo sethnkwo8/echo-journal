@@ -37,6 +37,7 @@ class UserRegisterRequest(UserBase):
 # Outgoing response payload
 class UserRegisterResponse(UserBase):
     id: UUID
+    bio: Optional[str]
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
@@ -56,6 +57,7 @@ class TokenData(BaseModel):
 # Incoming payload for PATCH /auth/me
 class UserUpdateRequest(BaseModel):
     name: Optional[str] = Field(default=None, min_length=1, max_length=255)
+    bio: Optional[str] = Field(default=None, max_length=256)
 
     @field_validator("name")
     @classmethod
@@ -63,6 +65,18 @@ class UserUpdateRequest(BaseModel):
         if v is None:
             return None
         return v.strip()
+
+    @field_validator("bio")
+    @classmethod
+    def validate_bio(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return None
+        trimmed = v.strip()
+        if trimmed == "":
+            return ""
+        if len(trimmed) < 3:
+            raise ValueError("Bio must be at least 3 characters")
+        return trimmed
 
 # Incoming payload for POST /auth/change-password
 class UserChangePassword(BaseModel):

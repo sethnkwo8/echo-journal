@@ -7,10 +7,12 @@ interface AvatarAndNameProps {
   user: AuthUser
   editing: boolean;
   draftName: string;
+  draftBio: string;
   setDraftName: React.Dispatch<React.SetStateAction<string>>;
+  setDraftBio: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function AvatarAndName({user, editing, draftName, setDraftName}: AvatarAndNameProps) {
+export function AvatarAndName({user, editing, draftName, draftBio, setDraftName, setDraftBio}: AvatarAndNameProps) {
     const displayName = editing ? draftName : user.name;
     const initials = getNameInitials(displayName || user.name);
 
@@ -35,12 +37,20 @@ export function AvatarAndName({user, editing, draftName, setDraftName}: AvatarAn
             {editing ? (
                 <div className="w-full max-w-xs space-y-3">
                     <input value={draftName} onChange={(e) => setDraftName(e.target.value)}
-                        className="w-full text-center bg-transparent text-xl font-bold text-white focus:outline-none border-b pb-1"
-                        style={{ borderColor: "#6366F1" }} />
+                      className="w-full text-center bg-transparent text-xl font-bold text-white focus:outline-none border-b pb-1"
+                      style={{ borderColor: "#6366F1" }} 
+                    />
+                    <textarea placeholder="Short bio..." value={draftBio} onChange={(e) => setDraftBio(e.target.value)} rows={2}
+                      className="w-full text-center text-sm bg-transparent resize-none focus:outline-none border-b pb-1"
+                      style={{ color: "#94A3B8", borderColor: "var(--app-border)" }} 
+                    />
                 </div>
             ) : (
                 <div className="text-center">
                     <h3 className="text-2xl font-bold text-white" style={{ fontFamily: "Outfit, sans-serif" }}>{user.name}</h3>
+                    {
+                      user.bio && <p className="text-sm mt-1" style={{ color: "#94A3B8" }}>{user.bio}</p>
+                    }
                 </div>
             )}
         </div>

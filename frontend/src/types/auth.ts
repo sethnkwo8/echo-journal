@@ -24,12 +24,14 @@ export interface AuthUser {
     id: string;
     name: string;
     email: string;
+    bio?: string;
     created_at: string;    
 }
 
 // Interface for user update
 export interface UserUpdate {
     name?: string;
+    bio?: string;
 }
 
 // Interface for user change password
