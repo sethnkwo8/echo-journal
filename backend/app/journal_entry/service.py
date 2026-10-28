@@ -9,7 +9,7 @@ from sqlmodel import Session, select, delete
 # Create journal entry service
 def create_entry(entry_payload: JournalEntryCreate, current_user: User, db_session: Session):
     # Create journal entry
-    entry = JournalEntry(user_id=current_user.id, title=entry_payload.title, content=entry_payload.content)
+    entry = JournalEntry(user_id=current_user.id, title=entry_payload.title, content=entry_payload.content, feeling=entry_payload.feeling, tags=entry_payload.tags)
 
     db_session.add(entry)
     db_session.commit()

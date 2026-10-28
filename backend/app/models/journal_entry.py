@@ -43,7 +43,7 @@ class JournalEntry(SQLModel, table=True):
     title: str = Field(index=True)
     content: str
     feeling: List[FeelingName] = Field(default=[], sa_type=JSON, max_length=3)
-    tags: List[str] = Field(max_length=10, default=[], sa_type=JSON)
+    tags: List[str] = Field(max_length=4, default=[], sa_type=JSON)
     created_at: datetime = Field(
     sa_column=Column(TIMESTAMP(timezone=True), server_default=text("CURRENT_TIMESTAMP"))
     )

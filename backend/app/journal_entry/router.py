@@ -7,7 +7,6 @@ from .service import create_entry, get_user_entries, get_entry_by_id, update_ent
 from app.database import get_session
 from app.auth.dependencies import get_current_user
 from app.models.user import User
-from typing import List
 
 router = APIRouter(prefix="/journals")
 
@@ -20,13 +19,7 @@ def journal_create(
 ):
     entry = create_entry(entry_payload=payload, current_user=user, db_session=db_session)
 
-    return JournalEntryResponse(
-        id=entry.id,
-        title=entry.title,
-        content=entry.content,
-        created_at=entry.created_at,
-        updated_at=entry.updated_at
-    )
+    return JournalEntryResponse.model_validate(entry)
 
 
 # GET route for getting all user's journal entries
@@ -38,13 +31,7 @@ def get_journals(
     entries = get_user_entries(current_user=user, db_session=db_session)
 
     return [
-        JournalEntryResponse(
-            id=entry.id,
-            title=entry.title,
-            content=entry.content,
-            created_at=entry.created_at,
-            updated_at=entry.updated_at
-        ) for entry in entries
+        JournalEntryResponse.model_validate(entry) for entry in entries
     ]
 
 # GET route to get a single user journal entry
@@ -56,13 +43,7 @@ def get_journal_entry(
 ):
     entry = get_entry_by_id(entry_id=entry_id, current_user=user, db_session=db_session)
 
-    return JournalEntryResponse(
-        id=entry.id,
-        title=entry.title,
-        content=entry.content,
-        created_at=entry.created_at,
-        updated_at=entry.updated_at
-    )
+    return JournalEntryResponse.model_validate(entry)
 
 # PATCH route to update an entry
 @router.patch(path="/{entry_id}", response_model=JournalEntryResponse, status_code=status.HTTP_200_OK)
@@ -74,13 +55,7 @@ def update_journal_entry(
 ):
     entry = update_entry(update_data=payload, entry_id=entry_id, current_user=user, db_session=db_session)
 
-    return JournalEntryResponse(
-        id=entry.id,
-        title=entry.title,
-        content=entry.content,
-        created_at=entry.created_at,
-        updated_at=entry.updated_at
-    )
+    return JournalEntryResponse.model_validate(entry)
 
 # DELETE route to delete all entries
 @router.delete(path="/", status_code=status.HTTP_204_NO_CONTENT)
