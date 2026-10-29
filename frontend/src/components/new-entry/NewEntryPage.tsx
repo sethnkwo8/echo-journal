@@ -10,13 +10,51 @@ import { Title } from "./Title";
 import { PrivacyNote } from "./PrivacyNote";
 import { Content } from "./Content";
 import { ErrorMessage } from "./ErrorMessage";
+import { Feeling } from "./Feeling";
+import { Tags } from "./Tags";
 
 export function NewEntryPage() {
     const router = useRouter();
     const [formData, setFormData] = useState<JournalEntryForm>({
         title: "",
-        content: ""
+        content: "",
+        feeling: [],
+        tags: []
     });
+    const [tagInput, setTagInput] = useState<string>("");
+    const [tagError, setTagError] = useState<string>("");
+
+    const addTag = () => {
+        setTagError("")
+        const tags = formData.tags ?? []
+        if (tags.length >= 4) {
+            setTagError("You can add up to 4 tags per entry")
+            return
+        };
+        const t = tagInput.trim().toLowerCase().replace(/^#/, "");
+        if (!t) {
+            setTagError("Tag cannot be empty")
+            return
+        }
+        if (t.length > 15) {
+            setTagError("Tag length cannot exceed 15 characters")
+            return
+        };
+        if (tags.includes(t)) {
+            setTagError("Tag already added")
+            return
+        }
+
+        if (mutation.isError) mutation.reset();
+        setFormData((prev) => ({ ...prev, tags: [...(prev.tags ?? []), t] }))
+        setTagInput("");
+    }
+
+    function handleTagInputChange(value: string) {
+        setTagInput(value);
+        if (tagError) setTagError("");
+    }
+
     const mutation = useCreateJournalEntry();
 
     const canSave = formData.title.trim().length >= 3 && formData.content.trim().length >= 3;
@@ -34,7 +72,9 @@ export function NewEntryPage() {
     function handleSave() {
         const payloadData = {
             title: formData.title.trim(),
-            content: formData.content.trim()
+            content: formData.content.trim(),
+            feeling: formData.feeling ?? [],
+            tags: formData.tags ?? []
         }
         mutation.mutate(payloadData);
     }
@@ -69,7 +109,27 @@ export function NewEntryPage() {
                 <Title title={formData.title} onChange={handleChange}/>
                 {/* Content */}
                 <Content headerText="Journal entry" content={formData.content} onChange={handleChange}/>
-                {/* TODO: Moods and Tags */}
+                {/* Feelings */}
+                <Feeling
+                    selected={formData.feeling ?? []}
+                    onChange={(feeling) => {
+                        if (mutation.isError) mutation.reset();
+                        setFormData((prev) => ({ ...prev, feeling }));
+                    }}
+                />
+                {/* Tags */}
+                <Tags 
+                    tags={formData.tags ?? []} 
+                    tagInput={tagInput} 
+                    onTagInputChange={handleTagInputChange} 
+                    onTagsChange={(tags) => {
+                        setTagError("")
+                        if (mutation.isError) mutation.reset();
+                        setFormData((prev) => ({ ...prev, tags }));
+                    }} 
+                    addTag={addTag}
+                    tagError={tagError}
+                />
                 {/* Privacy Note */}
                 <PrivacyNote />
             </div>
